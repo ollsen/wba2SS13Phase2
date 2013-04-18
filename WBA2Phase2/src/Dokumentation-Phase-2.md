@@ -13,3 +13,5 @@ Sind die Lösungen fuer eine Archivirung relevant werden diese in die KB überge
 Supportanfragen die nicht vom jeweiligen Support-Benutzer bewältigt werden können werden über Schwerpunkt-Tags je nach Wissenschwerpunkt, an andere Supportbenutzer weitergegeben.(asynchron) 
 
 darüberhinaus "eskaliert" eine supportanfrage wenn sie eine bestimmte Zeit überschritten hat und so als errinerungsfunktion fungiert(Synchron) die Anfrage wird nach dem Zeitpunkt an alle anderen SUpporter weitergeleitet(asynchron).
+
+test
