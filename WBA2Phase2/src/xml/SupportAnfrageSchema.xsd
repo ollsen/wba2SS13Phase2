@@ -3,8 +3,10 @@
 	xmlns:tns="http://www.example.org/SupportAnfrageSchema" 
 	elementFormDefault="qualified">
 	
-	<!-- XML Schema zum Support-Formular, die unter-->
+	<!-- XML Schema zum Support-Formular, die ct_anfrage und ct_info unterteil ist,
+		 wobei die Anzahl vom Element ct_info mehrfach-->
 	
+	<!-- Root-Element "Anfrage" mit Attribut "id" und den zugehörigen Eigenschaften -->
 	<xs:element name="Anfrage">
 		<xs:complexType>
 			<xs:complexContent>
@@ -15,6 +17,7 @@
 		</xs:complexType>
 	</xs:element>
 	
+	<!-- ComplexType zum Root-Element mit Zwei weiteren Kind-Elementen vom Typ ComplexType -->
 	<xs:complexType name="ct_anfrage">
 		<xs:sequence>
 			<xs:element name="Infos" type="tns:ct_info"/>
@@ -22,6 +25,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	<!-- ComplexType zum Element "Infos"-->
 	<xs:complexType name="ct_info">
 		<xs:sequence>
 			<xs:element name="Name" type="xs:string"/>
@@ -34,9 +38,11 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	<!-- ComplexType zum Element "Antwort" -->
 	<xs:complexType name="ct_antwort">
 		<xs:sequence>
 			<xs:element name="Supporter" type="xs:string"/>
+			<xs:element name="Antwort" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
