@@ -1,0 +1,42 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.example.org/SupportAnfrageSchema" 
+	xmlns:tns="http://www.example.org/SupportAnfrageSchema" 
+	elementFormDefault="qualified">
+	
+	<!-- XML Schema zum Support-Formular, die unter-->
+	
+	<xs:element name="Anfrage">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tns:ct_anfrage">
+					<xs:attribute name="id" type="xs:integer" use="required"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="ct_anfrage">
+		<xs:sequence>
+			<xs:element name="Infos" type="tns:ct_info"/>
+			<xs:element name="Antwort" type="tns:ct_antwort" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ct_info">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="KundenNr" type="xs:integer"/>
+			<xs:element name="Supporter" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Datum" type="xs:dateTime"/>
+			<xs:element name="Beschreibung" type="xs:string"/>
+			<xs:element name="Zustand" type="xs:string"/>
+			<xs:element name="Tags" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ct_antwort">
+		<xs:sequence>
+			<xs:element name="Supporter" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
