@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			elementFormDefault="qualified" 
+			targetNamespace="http://example.org/Rezept"
+			xmlns:tn="http://example.org/Rezept">
+			
+	<xs:element name="supporterdb" type="tn:ct_supporter"/>
+	
+	<xs:complexType name="ct_supporter">
+		<xs:sequence>
+			<xs:element name="profile" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="tn:ct_profile">
+							<xs:attribute name="id" type="xs:integer" use="required"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ct_profile">
+		<xs:sequence>
+			<xs:element name="Vorname" type="xs:string"/>
+			<xs:element name="Nachname" type="xs:string"/>
+			<xs:element name="Kenntnisse" type="tn:ctkenntnisse"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ctkenntnisse">
+		<xs:sequence>
+			<xs:element name="Kenntniss" type="tn:stkenntniss" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="stkenntniss">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hardware"/>
+			<xs:enumeration value="Software"/>
+			<xs:enumeration value="OSX"/>
+			<xs:enumeration value="Windows"/>
+			<xs:enumeration value="Netzwerk"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>
