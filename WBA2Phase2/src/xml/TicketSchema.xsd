@@ -7,18 +7,18 @@
 		 wobei die Anzahl vom Element ct_info mehrfach-->
 	
 	<!-- Root-Element "Anfrage" mit Attribut "id" und den zugehörigen Eigenschaften -->
-	<xs:element name="Anfrage">
+	<xs:element name="Ticket">
 		<xs:complexType>
 			<xs:complexContent>
-				<xs:extension base="tns:ct_anfrage">
-					<xs:attribute name="id" type="xs:integer" use="required"/>
+				<xs:extension base="tns:ct_ticket">
+					<xs:attribute name="id" type="xs:string" use="required"/>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
 	
 	<!-- ComplexType zum Root-Element mit Zwei weiteren Kind-Elementen vom Typ ComplexType -->
-	<xs:complexType name="ct_anfrage">
+	<xs:complexType name="ct_ticket">
 		<xs:sequence>
 			<xs:element name="Infos" type="tns:ct_info"/>
 			<xs:element name="Antwort" type="tns:ct_antwort" minOccurs="0" maxOccurs="unbounded"/>
@@ -34,14 +34,28 @@
 			<xs:element name="Datum" type="xs:dateTime"/>
 			<xs:element name="Beschreibung" type="xs:string"/>
 			<xs:element name="Zustand" type="xs:string"/>
-			<xs:element name="Tags" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Tags">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Tag" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	
 	<!-- ComplexType zum Element "Antwort" -->
 	<xs:complexType name="ct_antwort">
 		<xs:sequence>
-			<xs:element name="Supporter" type="xs:string"/>
+			<xs:element name="Supporter">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="id" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="Antwort" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			elementFormDefault="qualified" 
+			targetNamespace="http://example.org/Rezept"
+			xmlns:tn="http://example.org/Rezept">
+
+	<xs:element name="ticketlist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ticket_id" type="xs:string"/>
+				<xs:element name="tags">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="tag" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -12,7 +12,7 @@
 				<xs:complexType>
 					<xs:complexContent>
 						<xs:extension base="tn:ct_profile">
-							<xs:attribute name="id" type="xs:integer" use="required"/>
+							<xs:attribute name="id" type="xs:string" use="required"/>
 						</xs:extension>
 					</xs:complexContent>
 				</xs:complexType>
@@ -24,17 +24,17 @@
 		<xs:sequence>
 			<xs:element name="Vorname" type="xs:string"/>
 			<xs:element name="Nachname" type="xs:string"/>
-			<xs:element name="Kenntnisse" type="tn:ctkenntnisse"/>
+			<xs:element name="Kenntnisse" type="tn:ctknowhows"/>
 		</xs:sequence>
 	</xs:complexType>
 	
-	<xs:complexType name="ctkenntnisse">
+	<xs:complexType name="ctknowhows">
 		<xs:sequence>
-			<xs:element name="Kenntniss" type="tn:stkenntniss" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Kenntniss" type="tn:stknowhow" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
-	<xs:simpleType name="stkenntniss">
+	<xs:simpleType name="stknowhow">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Hardware"/>
 			<xs:enumeration value="Software"/>
