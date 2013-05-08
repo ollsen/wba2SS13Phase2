@@ -11,7 +11,7 @@
 	<xs:element name="Ticket">
 		<xs:complexType>
 			<xs:complexContent>
-				<xs:extension base="tns:ct_ticket">
+				<xs:extension base="tn:ct_ticket">
 					<xs:attribute name="id" type="xs:string" use="required"/>
 				</xs:extension>
 			</xs:complexContent>
@@ -21,8 +21,14 @@
 	<!-- ComplexType zum Root-Element mit Zwei weiteren Kind-Elementen vom Typ ComplexType -->
 	<xs:complexType name="ct_ticket">
 		<xs:sequence>
-			<xs:element name="Infos" type="tns:ct_info"/>
-			<xs:element name="Antwort" type="tns:ct_antwort" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Infos" type="tn:ct_info"/>
+			<xs:element name="Antworten">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Antwort" type="tn:ct_antwort" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -31,13 +37,14 @@
 		<xs:sequence>
 			<xs:element name="User">
 				<xs:complexType>
-					<xs:complexContent>
+					<xs:simpleContent>
 						<xs:extension base="xs:string">
 							<xs:attribute name="id" type="xs:string" use="required"/>
 						</xs:extension>
-					</xs:complexContent>
+					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="Standort" type="xs:string"/>
 			<xs:element name="Supporter" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
 			<xs:element name="Datum" type="xs:dateTime"/>
 			<xs:element name="Beschreibung" type="xs:string"/>

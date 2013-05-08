@@ -8,23 +8,16 @@
 	
 	<xs:complexType name="ct_user">
 		<xs:sequence>
-			<xs:element name="profile" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="tn:ct_profile">
-							<xs:attribute name="id" type="xs:string" use="required"/>
-						</xs:extension>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="user" type="tn:ct_profile"/>
 		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="ct_profile">
 		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
 			<xs:element name="Vorname" type="xs:string"/>
 			<xs:element name="Nachname" type="xs:string"/>
-			<xs:element name="Abteilung" type="xs:string"/>
+			<xs:element name="Standort" type="xs:string"/>
 		</xs:sequence>
-	</xs:complexType>		
+	</xs:complexType>
 </xs:schema>
