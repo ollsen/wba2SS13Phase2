@@ -3,10 +3,10 @@
 			elementFormDefault="qualified" 
 			targetNamespace="http://example.org/ticket"
 			xmlns:tn="http://example.org/ticket">
-			
-	<xs:element name="supporterdb" type="tn:ct_supporter"/>
+
+	<xs:element name="userdb" type="tn:ct_user"/>
 	
-	<xs:complexType name="ct_supporter">
+	<xs:complexType name="ct_user">
 		<xs:sequence>
 			<xs:element name="profile" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
@@ -24,24 +24,7 @@
 		<xs:sequence>
 			<xs:element name="Vorname" type="xs:string"/>
 			<xs:element name="Nachname" type="xs:string"/>
-			<xs:element name="Kenntnisse" type="tn:ctknowhows"/>
+			<xs:element name="Abteilung" type="xs:string"/>
 		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="ctknowhows">
-		<xs:sequence>
-			<xs:element name="Kenntniss" type="tn:stknowhow" minOccurs="1" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:simpleType name="stknowhow">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Hardware"/>
-			<xs:enumeration value="Software"/>
-			<xs:enumeration value="OSX"/>
-			<xs:enumeration value="Windows"/>
-			<xs:enumeration value="Netzwerk"/>
-		</xs:restriction>
-	</xs:simpleType>
-	
+	</xs:complexType>		
 </xs:schema>

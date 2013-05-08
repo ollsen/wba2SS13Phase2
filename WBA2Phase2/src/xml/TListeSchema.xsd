@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 			elementFormDefault="qualified" 
-			targetNamespace="http://example.org/Rezept"
-			xmlns:tn="http://example.org/Rezept">
+			targetNamespace="http://example.org/ticket"
+			xmlns:tn="http://example.org/ticket">
 
 	<xs:element name="ticketlist">
 		<xs:complexType>
