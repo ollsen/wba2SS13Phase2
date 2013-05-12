@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tn:userdb xmlns:tn="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/ticket ../schema/UListeSchema.xsd ">
+  <tn:user>
+    <tn:id>u_1</tn:id>
+    <tn:Vorname>tn:Vorname</tn:Vorname>
+    <tn:Nachname>tn:Nachname</tn:Nachname>
+    <tn:Standort>tn:Standort</tn:Standort>
+    <tn:admin>true</tn:admin>
+    <tn:Tickets/>
+  </tn:user>
+</tn:userdb>

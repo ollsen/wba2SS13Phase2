@@ -26,8 +26,14 @@
 	
 	<xs:complexType name="ct_supporter">
 		<xs:sequence>
-			<xs:element ref="tn:userdb"/>
-			<xs:element name="KnowHow" type="tn:stknowhow" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="tn:userdb" minOccurs="1"/>
+			<xs:element name="knowhows">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="KnowHow" type="tn:stknowhow" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	
