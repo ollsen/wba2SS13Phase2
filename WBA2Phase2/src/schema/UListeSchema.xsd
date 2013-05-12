@@ -3,14 +3,15 @@
 			elementFormDefault="qualified" 
 			targetNamespace="http://example.org/ticket"
 			xmlns:tn="http://example.org/ticket">
-			
-	<xs:element name="supporterdb" type="tn:ct_supporter"/>
-	
-	<xs:complexType name="ct_supporter">
-		<xs:sequence>
-			<xs:element name="supporter" type="tn:ct_profile" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
+
+	<xs:element name="userdb">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="user" type="tn:ct_profile" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="supporter" type="tn:ct_supporter" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	
 	<xs:complexType name="ct_profile">
 		<xs:sequence>
@@ -18,13 +19,21 @@
 			<xs:element name="Vorname" type="xs:string"/>
 			<xs:element name="Nachname" type="xs:string"/>
 			<xs:element name="Standort" type="xs:string"/>
-			<xs:element name="KnowHows" type="tn:ctknowhows"/>
+			<xs:element name="admin" type="xs:boolean"/>
+			<xs:element name="Tickets" type="tn:cttickets"/>
 		</xs:sequence>
 	</xs:complexType>
 	
-	<xs:complexType name="ctknowhows">
+	<xs:complexType name="ct_supporter">
 		<xs:sequence>
+			<xs:element ref="tn:userdb"/>
 			<xs:element name="KnowHow" type="tn:stknowhow" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="cttickets">
+		<xs:sequence>
+			<xs:element name="ticket" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -37,5 +46,4 @@
 			<xs:enumeration value="Netzwerk"/>
 		</xs:restriction>
 	</xs:simpleType>
-	
 </xs:schema>

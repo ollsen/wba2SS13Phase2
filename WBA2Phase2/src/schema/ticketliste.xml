@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ticketlist xmlns="http://example.org/ticket" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://example.org/ticket TListeSchema.xsd ">
+  <ticket>
+    <ticket_id>t_000001</ticket_id>
+    <tags>
+      <tag>tag</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <ticket_id>t_00002</ticket_id>
+    <tags>
+      <tag>tag</tag>
+    </tags>
+  </ticket>
+</ticketlist>
