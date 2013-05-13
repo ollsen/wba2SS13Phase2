@@ -8,7 +8,6 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="user" type="tn:ct_profile" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element name="supporter" type="tn:ct_supporter" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -19,21 +18,15 @@
 			<xs:element name="Vorname" type="xs:string"/>
 			<xs:element name="Nachname" type="xs:string"/>
 			<xs:element name="Standort" type="xs:string"/>
-			<xs:element name="admin" type="xs:boolean"/>
-			<xs:element name="Tickets" type="tn:cttickets"/>
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="ct_supporter">
-		<xs:sequence>
-			<xs:element ref="tn:userdb" minOccurs="1"/>
-			<xs:element name="knowhows">
+			<xs:element name="status" type="xs:string"/>
+			<xs:element name="KnowHows" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="KnowHow" type="tn:stknowhow" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="KnowHow" type="tn:stknowhow" minOccurs="1" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="Tickets" type="tn:cttickets"/>
 		</xs:sequence>
 	</xs:complexType>
 	

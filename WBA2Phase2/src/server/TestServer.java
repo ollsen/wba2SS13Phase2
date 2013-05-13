@@ -1,9 +1,10 @@
+package server;
 
 
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyServerFactory;
 
-public class HelloWorldTestServer {
+public class TestServer {
 	public static void main( String[] args ) throws Exception
 	   {
 	      String url = ( args.length > 0 ) ? args[0] : "http://localhost:4434";
