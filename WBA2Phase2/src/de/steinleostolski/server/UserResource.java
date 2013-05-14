@@ -1,4 +1,4 @@
-package server;
+package de.steinleostolski.server;
 
 
 import java.io.File;
@@ -16,7 +16,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import user.Userdb;
+import de.steinleostolski.user.Userdb;
+
 
 @Path( "user" )
 public class UserResource {

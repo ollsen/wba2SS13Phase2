@@ -1,15 +1,16 @@
-package client;
+package de.steinleostolski.client;
 
 import java.util.Scanner;
 
 
-import user.CtProfile;
-import user.CtProfile.KnowHows;
-import user.ObjectFactory;
-import user.Stknowhow;
-import user.Userdb;
 
 import com.sun.jersey.api.client.*;
+
+import de.steinleostolski.user.CtProfile;
+import de.steinleostolski.user.ObjectFactory;
+import de.steinleostolski.user.Stknowhow;
+import de.steinleostolski.user.Userdb;
+import de.steinleostolski.user.CtProfile.KnowHows;
 
 public class UserTestClient {
 

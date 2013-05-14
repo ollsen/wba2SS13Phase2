@@ -6,7 +6,7 @@
 //
 
 
-package user;
+package de.steinleostolski.user;
 
 import java.util.ArrayList;
 import java.util.List;

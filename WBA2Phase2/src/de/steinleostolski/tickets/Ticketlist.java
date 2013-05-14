@@ -6,7 +6,7 @@
 //
 
 
-package tickets;
+package de.steinleostolski.tickets;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,13 +5,13 @@
   <ticket>
     <ticket_id>t_000001</ticket_id>
     <tags>
-      <tag>tag</tag>
+      <tag>Hardware</tag>
     </tags>
   </ticket>
   <ticket>
     <ticket_id>t_00002</ticket_id>
     <tags>
-      <tag>tag</tag>
+      <tag>Software</tag>
     </tags>
   </ticket>
 </ticketlist>

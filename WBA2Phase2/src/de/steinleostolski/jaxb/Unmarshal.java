@@ -1,4 +1,4 @@
-package jaxb;
+package de.steinleostolski.jaxb;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import user.Userdb;
+import de.steinleostolski.user.Userdb;
+
 
 
 public class Unmarshal {

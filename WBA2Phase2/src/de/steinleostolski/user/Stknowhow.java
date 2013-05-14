@@ -6,7 +6,7 @@
 //
 
 
-package user;
+package de.steinleostolski.user;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;

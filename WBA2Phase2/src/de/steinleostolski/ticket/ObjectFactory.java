@@ -6,7 +6,7 @@
 //
 
 
-package ticket;
+package de.steinleostolski.ticket;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

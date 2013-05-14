@@ -1,4 +1,4 @@
-package server;
+package de.steinleostolski.server;
 
 
 import javax.ws.rs.*;
