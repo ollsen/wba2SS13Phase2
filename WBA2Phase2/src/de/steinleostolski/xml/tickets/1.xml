@@ -6,10 +6,12 @@
       	<Betreff>Internet gelöscht</Betreff>
 		<User id="1">Max Mustermann</User>
 	    <Standort>CGN</Standort>
-	    <Supporter>Michael Schmidt</Supporter>
+	    <SupporterList>
+            <Supporter id="3">Michael Schmidt</Supporter>
+        </SupporterList>
 	    <Datum>2013-05-14T12:27:35</Datum>
 	    <Beschreibung>Ich habe ausversehen das Internet gelöscht</Beschreibung>
-	    <Zustand>Hoch</Zustand>
+	    <Zustand>hoch</Zustand>
 	    <Tags>
 	      <Tag>Hardware</Tag>
 	    </Tags>

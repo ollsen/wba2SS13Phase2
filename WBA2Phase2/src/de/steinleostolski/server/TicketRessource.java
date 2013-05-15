@@ -19,7 +19,7 @@ import de.steinleostolski.user.Userdb;
 
 
 @Path("ticket")
-public class TestRessource extends Ressource{
+public class TicketRessource extends Ressource{
 	
 	private static String schemaLoc;
 
@@ -35,7 +35,7 @@ public class TestRessource extends Ressource{
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	@Path("{id}")
-	public Ticket getTicket(@PathParam("id") String id) throws JAXBException, IOException{
+	public Ticket getTicket(@PathParam("id") BigInteger id) throws JAXBException, IOException{
 		Ticket ticket = new Ticket();
 		ticket = (Ticket) unmarshal(Ticket.class, "tickets/"+id+".xml");
 		
@@ -45,8 +45,7 @@ public class TestRessource extends Ressource{
 	@GET
 	@Path("query")
 	public Ticketlist getQuery(@QueryParam("zustand") String zustand) throws JAXBException, IOException {
-		Ticketlist ticketlist = new Ticketlist();
-		ticketlist = (Ticketlist) unmarshal(Ticketlist.class, "ticketliste.xml");
+		Ticketlist ticketlist = get();
 		
 		Ticketlist newList = new Ticketlist();
 		
@@ -64,8 +63,7 @@ public class TestRessource extends Ressource{
 	@Consumes(MediaType.APPLICATION_XML)
 	@Path("add")
 	public Response post(Ticket ticket) throws JAXBException, IOException {
-		Ticketlist ticketlist = new Ticketlist();
-		ticketlist = (Ticketlist) unmarshal(Ticketlist.class, "ticketliste.xml");
+		Ticketlist ticketlist = get();
 		int ticketId = ticketlist.getTeintrag().get(ticketlist.getTeintrag().size()-1)
 				.getTicketId().intValue()+1;
 		
@@ -116,8 +114,7 @@ public class TestRessource extends Ressource{
 	@Consumes(MediaType.APPLICATION_XML)
 	@Path("{id}/delete")
 	public Response delete(@PathParam("id") BigInteger id) throws JAXBException, IOException {
-		Ticketlist ticketlist = new Ticketlist();
-		ticketlist = (Ticketlist) unmarshal(Ticketlist.class, "ticketliste.xml");
+		Ticketlist ticketlist = get();
 		
 		String result = null;
 		String result2 = null;
@@ -161,6 +158,32 @@ public class TestRessource extends Ressource{
 		return Response.noContent().entity(result).entity(result2).entity(result3).build();
 	}
 
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}/edit")
+	public Response setStatus(@PathParam("id") BigInteger id) {
+		return Response.status(201).build();
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}/status")
+	public Response setStatus(@PathParam("id") BigInteger id,
+			@QueryParam("setStatus")String zustand) throws JAXBException, IOException {
+		Ticket ticket = getTicket(id);
+		
+		ticket.getInfos().setZustand(de.steinleostolski.ticket.StZustand.fromValue(zustand));
+		Ticketlist tList = get();
+		
+		for(int i = 0; i < tList.getTeintrag().size(); i++) {
+			if(tList.getTeintrag().get(i).getTicketId().equals(id))
+				tList.getTeintrag().get(i).setZustand(StZustand.valueOf(zustand));
+		}
+		
+		return Response.status(201).build();
+	}
+	
+	
 	
 
 }

@@ -95,7 +95,7 @@ public class TicketTestClient {
 		 
 			  }
 
-		} else {
+		} else if (auswahl == 2) {
 			System.out.println("id eingeben:");
 			String id = in.nextLine();
 			try {
@@ -115,6 +115,26 @@ public class TicketTestClient {
 				String output = response.getEntity(String.class);
 				System.out.println(output);
 				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(auswahl == 3) {
+			System.out.println("id eingeben:");
+			String id = in.nextLine();
+			System.out.println("status: ");
+			String status = in.nextLine();
+			try {
+				Client client = Client.create();
+				WebResource webResource = client
+						   .resource("http://localhost:4434/ticket/"+id+"/edit?setStatus="+status);
+				
+				ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
+						.put(ClientResponse.class);
+				
+				if (response.getStatus() != 201) {
+					throw new RuntimeException("Failed : HTTP error code : "
+					     + response.getStatus());
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

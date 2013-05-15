@@ -1,6 +1,5 @@
 package de.steinleostolski.client;
 
-import java.math.BigInteger;
 import java.util.Scanner;
 
 
@@ -8,6 +7,7 @@ import java.util.Scanner;
 import com.sun.jersey.api.client.*;
 
 import de.steinleostolski.user.CtProfile;
+import de.steinleostolski.user.Cttickets;
 import de.steinleostolski.user.ObjectFactory;
 import de.steinleostolski.user.Stknowhow;
 import de.steinleostolski.user.Userdb;
@@ -36,8 +36,9 @@ public class UserTestClient {
 			Userdb user = new ObjectFactory().createUserdb();
 			CtProfile profile = new ObjectFactory().createCtProfile();
 			KnowHows knowhow = new ObjectFactory().createCtProfileKnowHows();
+			Cttickets tickets = new ObjectFactory().createCttickets();
 			
-			profile.setId(BigInteger.valueOf(4));
+			
 			profile.setVorname("Vorname");
 			profile.setNachname("Nachname");
 			profile.setStandort("CGN");
@@ -46,6 +47,7 @@ public class UserTestClient {
 			knowhow.getKnowHow().add(Stknowhow.HARDWARE);
 			knowhow.getKnowHow().add(Stknowhow.SOFTWARE);
 			profile.setKnowHows(knowhow);
+			profile.setTickets(tickets);
 			user.getUser().add(profile);
 			
 	 
@@ -66,13 +68,13 @@ public class UserTestClient {
 			e.printStackTrace();
 	 
 		  }
-		} else {
+		} else if(auswahl == 2) {
 		System.out.println("id eingeben:");
 		String id = in.nextLine();
 		try {
 			Client client = Client.create();
 			WebResource webResource = client
-					   .resource("http://localhost:4434/user/delete/"+id);
+					   .resource("http://localhost:4434/user/"+id+"/delete");
 			
 			ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
 					.delete(ClientResponse.class);
@@ -89,6 +91,6 @@ public class UserTestClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	} 
 	}
 }
