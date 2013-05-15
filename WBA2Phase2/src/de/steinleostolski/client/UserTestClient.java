@@ -1,5 +1,6 @@
 package de.steinleostolski.client;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
 
@@ -36,7 +37,7 @@ public class UserTestClient {
 			CtProfile profile = new ObjectFactory().createCtProfile();
 			KnowHows knowhow = new ObjectFactory().createCtProfileKnowHows();
 			
-			profile.setId("s_004");
+			profile.setId(BigInteger.valueOf(4));
 			profile.setVorname("Vorname");
 			profile.setNachname("Nachname");
 			profile.setStandort("CGN");

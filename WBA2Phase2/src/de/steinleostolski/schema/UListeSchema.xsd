@@ -14,7 +14,7 @@
 	
 	<xs:complexType name="ct_profile">
 		<xs:sequence>
-			<xs:element name="id" type="xs:string"/>
+			<xs:element name="id" type="xs:nonNegativeInteger"/>
 			<xs:element name="Vorname" type="xs:string"/>
 			<xs:element name="Nachname" type="xs:string"/>
 			<xs:element name="Standort" type="xs:string"/>
@@ -32,7 +32,7 @@
 	
 	<xs:complexType name="cttickets">
 		<xs:sequence>
-			<xs:element name="ticket" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ticketId" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	

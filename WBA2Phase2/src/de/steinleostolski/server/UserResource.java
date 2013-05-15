@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.math.BigInteger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -28,7 +29,7 @@ public class UserResource {
 	public void unmarshal() throws IOException, JAXBException{
 		jc = JAXBContext.newInstance(Userdb.class);
 		Unmarshaller unmarshaller = jc.createUnmarshaller();
-		InputStream inputStream = new FileInputStream("src/xml/user.xml");
+		InputStream inputStream = new FileInputStream("src/de/steinleostolski/xml/user.xml");
 		Reader reader = new InputStreamReader(inputStream,"UTF-8");
 	    try {
 	    	user = (Userdb) unmarshaller.unmarshal(reader);
@@ -49,11 +50,11 @@ public class UserResource {
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	@Path("{id}")
-	public Userdb getProfile(@PathParam("id") String id) throws IOException, JAXBException {
+	public Userdb getProfile(@PathParam("id") BigInteger id) throws IOException, JAXBException {
 		unmarshal();
 		Userdb profile = new Userdb();
 		for(int i = 0; i < user.getUser().size(); i++) {
-			if(user.getUser().get(i).getId().contains(id))
+			if(user.getUser().get(i).getId().equals(id))
 				profile.getUser().add(user.getUser().get(i));
 		}
 		return profile;
@@ -75,12 +76,12 @@ public class UserResource {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_XML)
 	@Path("delete/{id}")
-	public Response deleteProfile(@PathParam("id") String id) throws IOException, JAXBException{
+	public Response deleteProfile(@PathParam("id") BigInteger id) throws IOException, JAXBException{
 		unmarshal();
 		System.out.println("delete");
 		String result = null;
 		for(int i = 0; i < user.getUser().size(); i++) {
-			if(user.getUser().get(i).getId().contains(id)) {
+			if(user.getUser().get(i).getId().equals(id)) {
 				user.getUser().remove(i);
 				result = "Benutzer gelöscht";
 			} else {
@@ -97,6 +98,7 @@ public class UserResource {
 		Marshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+		marshaller.setProperty("jaxb.schemaLocation", "http://example.org/Rezept Rezept.xsd");
 		marshaller.marshal(user, new File("src/xml/user.xml"));
 	}
 	

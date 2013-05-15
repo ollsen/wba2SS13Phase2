@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<userdb xmlns="http://example.org/ticket">
+<userdb xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/ticket ../schema/UListeSchema.xsd">
     <user>
-        <id>a_001</id>
+        <id>1</id>
         <Vorname>Max</Vorname>
         <Nachname>Mustermann</Nachname>
         <Standort>CGN</Standort>
@@ -9,10 +9,17 @@
         <KnowHows>
             <KnowHow>Software</KnowHow>
         </KnowHows>
-        <Tickets/>
+        <Tickets>
+            <ticketId>3</ticketId>
+            <ticketId>4</ticketId>
+            <ticketId>6</ticketId>
+            <ticketId>7</ticketId>
+            <ticketId>8</ticketId>
+            <ticketId>9</ticketId>
+        </Tickets>
     </user>
     <user>
-        <id>u_001</id>
+        <id>2</id>
         <Vorname>Michael</Vorname>
         <Nachname>Schmidt</Nachname>
         <Standort>HAM</Standort>
@@ -20,7 +27,7 @@
         <Tickets/>
     </user>
     <user>
-        <id>s_001</id>
+        <id>3</id>
         <Vorname>Michael</Vorname>
         <Nachname>Schmidt</Nachname>
         <Standort>NBG</Standort>
@@ -30,10 +37,17 @@
             <KnowHow>Software</KnowHow>
             <KnowHow>Windows</KnowHow>
         </KnowHows>
-        <Tickets/>
+        <Tickets>
+            <ticketId>3</ticketId>
+            <ticketId>4</ticketId>
+            <ticketId>6</ticketId>
+            <ticketId>7</ticketId>
+            <ticketId>8</ticketId>
+            <ticketId>9</ticketId>
+        </Tickets>
     </user>
     <user>
-        <id>s_004</id>
+        <id>4</id>
         <Vorname>Vorname</Vorname>
         <Nachname>Nachname</Nachname>
         <Standort>CGN</Standort>
@@ -42,5 +56,6 @@
             <KnowHow>Hardware</KnowHow>
             <KnowHow>Software</KnowHow>
         </KnowHows>
+        <Tickets/>
     </user>
 </userdb>

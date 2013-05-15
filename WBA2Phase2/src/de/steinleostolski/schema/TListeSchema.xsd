@@ -7,10 +7,13 @@
 	<xs:element name="ticketlist">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="ticket" minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="teintrag" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="ticket_id" type="xs:string"/>
+							<xs:element name="ticket_id" type="xs:nonNegativeInteger"/>
+							<xs:element name="betreff" type="xs:string"/>
+							<xs:element name="datum" type="xs:dateTime"/>
+							<xs:element name="zustand" type="tn:st_zustand"/>
 							<xs:element name="tags">
 								<xs:complexType>
 									<xs:sequence>
@@ -24,4 +27,13 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<xs:simpleType name="st_zustand">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="niedrig"/>
+			<xs:enumeration value="normal"/>
+			<xs:enumeration value="hoch"/>
+			<xs:enumeration value="kritisch"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

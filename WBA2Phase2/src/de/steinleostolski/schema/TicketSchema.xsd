@@ -12,7 +12,7 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="tn:ct_ticket">
-					<xs:attribute name="id" type="xs:string" use="required"/>
+					<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -35,24 +35,40 @@
 	<!-- ComplexType zum Element "Infos"-->
 	<xs:complexType name="ct_info">
 		<xs:sequence>
+			<xs:element name="Betreff" type="xs:string"/>
 			<xs:element name="User">
 				<xs:complexType>
 					<xs:simpleContent>
 						<xs:extension base="xs:string">
-							<xs:attribute name="id" type="xs:string" use="required"/>
+							<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
 						</xs:extension>
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="Standort" type="xs:string"/>
-			<xs:element name="Supporter" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="SupporterList">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Supporter" minOccurs="1" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
 			<xs:element name="Datum" type="xs:dateTime"/>
 			<xs:element name="Beschreibung" type="xs:string"/>
-			<xs:element name="Zustand" type="xs:string"/>
+			<xs:element name="Zustand" type="tn:st_zustand"/>
 			<xs:element name="Tags">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Tag" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+						<xs:element name="Tag" type="tn:st_knowhow" minOccurs="1" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -74,4 +90,23 @@
 			<xs:element name="Antwort" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:simpleType name="st_knowhow">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hardware"/>
+			<xs:enumeration value="Software"/>
+			<xs:enumeration value="OSX"/>
+			<xs:enumeration value="Windows"/>
+			<xs:enumeration value="Netzwerk"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="st_zustand">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="niedrig"/>
+			<xs:enumeration value="normal"/>
+			<xs:enumeration value="hoch"/>
+			<xs:enumeration value="kritisch"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

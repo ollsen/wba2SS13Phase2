@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ticket id="1" xmlns="http://example.org/ticket" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd ">
+	<Infos>
+      	<Betreff>Internet gelöscht</Betreff>
+		<User id="1">Max Mustermann</User>
+	    <Standort>CGN</Standort>
+	    <Supporter>Michael Schmidt</Supporter>
+	    <Datum>2013-05-14T12:27:35</Datum>
+	    <Beschreibung>Ich habe ausversehen das Internet gelöscht</Beschreibung>
+	    <Zustand>Hoch</Zustand>
+	    <Tags>
+	      <Tag>Hardware</Tag>
+	    </Tags>
+	</Infos>
+	<Antworten>
+	</Antworten>
+</Ticket>
