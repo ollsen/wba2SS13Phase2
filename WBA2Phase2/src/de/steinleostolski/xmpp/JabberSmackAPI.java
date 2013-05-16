@@ -69,7 +69,7 @@ public class JabberSmackAPI implements MessageListener{
  
  
     // Enter your login information here
-    c.login("admin", "fr0zenfish");
+    c.login("admin", "password");
  
     c.displayBuddyList();
  

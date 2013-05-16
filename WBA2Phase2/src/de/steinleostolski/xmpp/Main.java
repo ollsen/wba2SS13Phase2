@@ -26,7 +26,7 @@ public class Main {
 	    connection = new XMPPConnection(config);
 	    
 	    connection.connect();
-	    connection.login("admin", "fr0zenfish");
+	    connection.login("admin", "password");
 	    
 		PubSubManager mgr = new PubSubManager(connection);
 
