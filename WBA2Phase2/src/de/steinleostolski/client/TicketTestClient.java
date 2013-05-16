@@ -93,7 +93,9 @@ public class TicketTestClient {
 		 
 				e.printStackTrace();
 		 
-			  }
+			  } finally {
+					in.close();
+				}
 
 		} else if (auswahl == 2) {
 			System.out.println("id eingeben:");
@@ -117,6 +119,8 @@ public class TicketTestClient {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				in.close();
 			}
 		} else if(auswahl == 3) {
 			System.out.println("id eingeben:");
@@ -137,8 +141,11 @@ public class TicketTestClient {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				in.close();
 			}
 		}
+		
 		
 	}
 
