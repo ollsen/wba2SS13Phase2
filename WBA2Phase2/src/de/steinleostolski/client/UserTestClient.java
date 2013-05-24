@@ -67,7 +67,9 @@ public class UserTestClient {
 	 
 			e.printStackTrace();
 	 
-		  }
+		  } finally {
+				in.close();
+			}
 		} else if(auswahl == 2) {
 		System.out.println("id eingeben:");
 		String id = in.nextLine();
@@ -90,6 +92,8 @@ public class UserTestClient {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			in.close();
 		}
 	} 
 	}
