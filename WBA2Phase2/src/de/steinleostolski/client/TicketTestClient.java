@@ -13,6 +13,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import de.steinleostolski.ticket.CtAntwort;
 import de.steinleostolski.ticket.CtInfo;
 import de.steinleostolski.ticket.CtInfo.SupporterList;
 import de.steinleostolski.ticket.CtInfo.SupporterList.Supporter;
@@ -34,6 +35,9 @@ public class TicketTestClient {
 		Scanner in = new Scanner(System.in);
 		System.out.println("1:Ticket erstellen");
 		System.out.println("2:Ticket löschen");
+		System.out.println("3:Ticketstatus setzen");
+		System.out.println("4:Ticket bearbeiten");
+
 		auswahl = in.nextInt();
 		in.nextLine();
 		if(auswahl == 1) {
@@ -130,7 +134,7 @@ public class TicketTestClient {
 			try {
 				Client client = Client.create();
 				WebResource webResource = client
-						   .resource("http://localhost:4434/ticket/"+id+"/edit?setStatus="+status);
+						   .resource("http://localhost:4434/ticket/"+id+"/set?status="+status);
 				
 				ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
 						.put(ClientResponse.class);
@@ -144,6 +148,47 @@ public class TicketTestClient {
 			} finally {
 				in.close();
 			}
+		} else if(auswahl == 4) {
+			System.out.println("ticketid eingeben:");
+			String tid = in.nextLine();
+			
+			System.out.println("userid:");
+			BigInteger uit = BigInteger.valueOf(in.nextLong());
+			in.nextLine();
+			
+			System.out.println("Antwort:");
+			String antwortText = in.nextLine();
+			
+			Ticket ticket = new Ticket();
+			ticket.setAntworten(new Antworten());
+			CtAntwort antwort = new CtAntwort();
+			
+			antwort.setSupporter(new CtAntwort.Supporter());
+			antwort.getSupporter().setValue("Max Mustermann");
+			antwort.getSupporter().setId(uit);
+			
+			antwort.setAntwort(antwortText);
+			ticket.getAntworten().getAntwort().add(antwort);
+			
+			
+			try {
+				Client client = Client.create();
+				WebResource webResource = client
+						   .resource("http://localhost:4434/ticket/"+tid+"/answer");
+				
+				ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
+						.put(ClientResponse.class, ticket);
+				
+				if (response.getStatus() != 201) {
+					throw new RuntimeException("Failed : HTTP error code : "
+					     + response.getStatus());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				in.close();
+			}
+			
 		}
 		
 		

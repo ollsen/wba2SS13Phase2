@@ -4,7 +4,7 @@
         <ticket_id>1</ticket_id>
         <betreff>Internet gelöscht</betreff>
         <datum>2001-12-31T12:00:00</datum>
-        <zustand>normal</zustand>
+        <zustand>niedrig</zustand>
         <tags>
             <tag>Hardware</tag>
         </tags>

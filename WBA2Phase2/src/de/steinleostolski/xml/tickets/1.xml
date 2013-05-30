@@ -1,21 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Ticket id="1" xmlns="http://example.org/ticket" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd ">
-	<Infos>
-      	<Betreff>Internet gelöscht</Betreff>
-		<User id="1">Max Mustermann</User>
-	    <Standort>CGN</Standort>
-	    <SupporterList>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Ticket xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1" xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd">
+    <Infos>
+        <Betreff>Internet gelöscht</Betreff>
+        <User id="1">Max Mustermann</User>
+        <Standort>CGN</Standort>
+        <SupporterList>
             <Supporter id="3">Michael Schmidt</Supporter>
         </SupporterList>
-	    <Datum>2013-05-14T12:27:35</Datum>
-	    <Beschreibung>Ich habe ausversehen das Internet gelöscht</Beschreibung>
-	    <Zustand>hoch</Zustand>
-	    <Tags>
-	      <Tag>Hardware</Tag>
-	    </Tags>
-	</Infos>
-	<Antworten>
-	</Antworten>
+        <Datum>2013-05-14T12:27:35</Datum>
+        <Beschreibung>Ich habe ausversehen das Internet gelöscht</Beschreibung>
+        <Zustand>niedrig</Zustand>
+        <Tags>
+            <Tag>Hardware</Tag>
+        </Tags>
+    </Infos>
+    <Antworten>
+        <Antwort>
+            <Supporter id="1"></Supporter>
+            <Antwort>test</Antwort>
+        </Antwort>
+        <Antwort>
+            <Supporter id="1"></Supporter>
+            <Antwort>test</Antwort>
+        </Antwort>
+        <Antwort>
+            <Supporter id="2"></Supporter>
+            <Antwort>hifdsajldsfas</Antwort>
+        </Antwort>
+        <Antwort>
+            <Supporter id="3">Max Mustermann</Supporter>
+            <Antwort>hallo</Antwort>
+        </Antwort>
+    </Antworten>
 </Ticket>
