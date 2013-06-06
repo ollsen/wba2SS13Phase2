@@ -9,13 +9,17 @@ import javax.swing.JSpinner;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.JList;
 
 public class MainMenuSupporter extends JabberSmackAPI {
 
@@ -118,19 +122,20 @@ public class MainMenuSupporter extends JabberSmackAPI {
 		lblh.setBounds(422, 250, 61, 16);
 		frame.getContentPane().add(lblh);
 		
-		JLabel aRed = new JLabel("");
-		aRed.setHorizontalAlignment(SwingConstants.CENTER);
-		aRed.setIcon(new ImageIcon("/Users/derdavid/Documents/WBA2Pictures/redA.png"));
-		aRed.setBounds(322, -28, 205, 161);
-		frame.getContentPane().add(aRed);
+
+		JList list_1 = new JList();
+		list_1.setBounds(348, 44, 157, 106);
 		
-		JLabel aBlack = new JLabel("");
-		aBlack.setIcon(new ImageIcon("/Users/derdavid/Documents/WBA2Pictures/blackA.png"));
-		aBlack.setBounds(366, 36, 117, 103);
-		frame.getContentPane().add(aBlack);
-
-
+		frame.getContentPane().add(list_1);
+		DefaultListModel defModel = new DefaultListModel();
+		list_1.setModel (defModel);
+		
+		String[] listitems = {"David","und","Olli","rooken!"};
+		
+		
+		Iterator<String> it = Arrays.asList(listitems).iterator();
+		while (it.hasNext())
+			defModel.addElement (it.next());
 
 	}
-
 }

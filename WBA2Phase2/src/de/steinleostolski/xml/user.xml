@@ -2,6 +2,7 @@
 <userdb xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/ticket ../schema/UListeSchema.xsd">
     <user>
         <id>1</id>
+        <jabber>admin</jabber>
         <Vorname>Max</Vorname>
         <Nachname>Mustermann</Nachname>
         <Standort>CGN</Standort>
@@ -20,6 +21,7 @@
     </user>
     <user>
         <id>2</id>
+        <jabber>null</jabber>
         <Vorname>Michael</Vorname>
         <Nachname>Schmidt</Nachname>
         <Standort>HAM</Standort>
@@ -28,6 +30,7 @@
     </user>
     <user>
         <id>3</id>
+        <jabber>ollsen</jabber>
         <Vorname>Michael</Vorname>
         <Nachname>Schmidt</Nachname>
         <Standort>NBG</Standort>
@@ -48,6 +51,7 @@
     </user>
     <user>
         <id>4</id>
+        <jabber>null</jabber>
         <Vorname>Vorname</Vorname>
         <Nachname>Nachname</Nachname>
         <Standort>CGN</Standort>

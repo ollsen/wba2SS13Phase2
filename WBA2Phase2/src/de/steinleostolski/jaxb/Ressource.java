@@ -17,7 +17,7 @@ import javax.xml.bind.Unmarshaller;
 
 
 
-public abstract class Ressource {
+public class Ressource {
 	
 	final static String xmlDir = "src/de/steinleostolski/xml/";
 	
@@ -47,8 +47,9 @@ public abstract class Ressource {
 	}
 	
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
-	public abstract Object get() throws JAXBException, IOException;
+	public Object get() throws JAXBException, IOException{
+		return null;
+	}
 	
 	@POST
 	public Response post() {
