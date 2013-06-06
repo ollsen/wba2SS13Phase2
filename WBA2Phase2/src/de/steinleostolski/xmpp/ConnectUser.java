@@ -110,7 +110,7 @@ public class ConnectUser extends JabberSmackAPI  {
 		}
 		System.out.println(""+connection.isAuthenticated());
 		if (connection.isAuthenticated()==true){
-		MainMenu.main(null);
+		MainMenuSupporter.main(null);
 		frame.dispose();}
 		}
 	});
