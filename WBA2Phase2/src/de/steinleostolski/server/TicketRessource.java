@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import de.steinleostolski.jaxb.Ressource;
+import de.steinleostolski.ticket.CtAntwort;
+import de.steinleostolski.ticket.CtTicket.Antworten;
 import de.steinleostolski.ticket.Ticket;
 import de.steinleostolski.tickets.StZustand;
 import de.steinleostolski.tickets.Ticketlist;
@@ -161,24 +163,50 @@ public class TicketRessource extends Ressource{
 	@PUT
 	@Consumes(MediaType.APPLICATION_XML)
 	@Path("{id}/edit")
-	public Response setStatus(@PathParam("id") BigInteger id) {
+	public Response setStatus(@PathParam("id") BigInteger id) throws JAXBException, IOException {
+		Ticket ticket = getTicket(id);
+		
+		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
+		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
 		return Response.status(201).build();
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_XML)
-	@Path("{id}/status")
+	@Path("{id}/answer")
+	public Response addAnswer(@PathParam("id") BigInteger id, Ticket newTicket) throws JAXBException, IOException {
+		Ticket ticket = getTicket(id);
+		
+		ticket.getAntworten().getAntwort().add(newTicket.getAntworten().getAntwort().get(0));
+		
+		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
+		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
+		return Response.status(201).build();
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}/set")
 	public Response setStatus(@PathParam("id") BigInteger id,
-			@QueryParam("setStatus")String zustand) throws JAXBException, IOException {
+			@QueryParam("status")String zustand) throws JAXBException, IOException {
 		Ticket ticket = getTicket(id);
 		
 		ticket.getInfos().setZustand(de.steinleostolski.ticket.StZustand.fromValue(zustand));
+		
+		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
+		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
+		
 		Ticketlist tList = get();
+		
+		System.out.println(ticket.getInfos().getZustand());
 		
 		for(int i = 0; i < tList.getTeintrag().size(); i++) {
 			if(tList.getTeintrag().get(i).getTicketId().equals(id))
-				tList.getTeintrag().get(i).setZustand(StZustand.valueOf(zustand));
+				tList.getTeintrag().get(i).setZustand(StZustand.fromValue(zustand));
 		}
+		
+		schemaLoc = "http://example.org/ticket ../schema/TListeSchema.xsd";
+		marshal(Ticketlist.class, tList, "ticketliste.xml", schemaLoc);
 		
 		return Response.status(201).build();
 	}

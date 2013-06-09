@@ -17,7 +17,6 @@ public class UserResource extends Ressource {
 	
 	private static String schemaLoc;
 
-	@Override
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public Userdb get() throws JAXBException, IOException {
