@@ -115,4 +115,34 @@
         </KnowHows>
         <Tickets/>
     </user>
+    <user>
+        <id>5</id>
+        <jabber>mschmidt</jabber>
+        <Vorname>Michael</Vorname>
+        <Nachname>Schmidt</Nachname>
+        <Standort>BER</Standort>
+        <status>comboBoxChanged</status>
+        <KnowHows/>
+        <Tickets/>
+    </user>
+    <user>
+        <id>6</id>
+        <jabber>pkrause</jabber>
+        <Vorname>Petra</Vorname>
+        <Nachname>Krause</Nachname>
+        <Standort>CGN</Standort>
+        <status>User</status>
+        <KnowHows/>
+        <Tickets/>
+    </user>
+    <user>
+        <id>7</id>
+        <jabber>osteinle</jabber>
+        <Vorname>Oliver</Vorname>
+        <Nachname>Steinle</Nachname>
+        <Standort>CGN</Standort>
+        <status>User</status>
+        <KnowHows/>
+        <Tickets/>
+    </user>
 </userdb>

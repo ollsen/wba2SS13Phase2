@@ -12,7 +12,7 @@ import de.steinleostolski.jaxb.Ressource;
 import de.steinleostolski.tickets.Ticketlist;
 import de.steinleostolski.user.Userdb;
 
-@Path("users")
+@Path("user")
 public class UserResource extends Ressource {
 	
 	private static String schemaLoc;

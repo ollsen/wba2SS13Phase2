@@ -14,7 +14,17 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.jivesoftware.smack.AccountManager;
+import org.jivesoftware.smack.XMPPException;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+
 import de.steinleostolski.client2.Application;
+import de.steinleostolski.user.CtProfile;
+import de.steinleostolski.user.CtProfile.KnowHows;
+import de.steinleostolski.user.Cttickets;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.PubsubClient;
 
@@ -24,6 +34,11 @@ public class NewUserPanel extends JPanel {
 	private PubsubClient pubsub;
 	private Userdb user;
 	
+	private JTextField vornameField;
+	private JTextField nachnameField;
+	private JTextField standortField;
+	private JComboBox userLevelCBox;
+	private JPasswordField pwField;
 
 	/**
 	 * 
@@ -52,11 +67,11 @@ public class NewUserPanel extends JPanel {
 		JLabel userLevelLabel = new JLabel("User Level");
 		JLabel pwLabel = new JLabel("Passwort");
 		
-		JTextField vornameField = new JTextField(16);
-		JTextField nachnameField = new JTextField(16);
-		JTextField standortField = new JTextField(16);
-		JComboBox userLevelCBox = new JComboBox();
-		JPasswordField pwField = new JPasswordField(16);
+		vornameField = new JTextField(16);
+		nachnameField = new JTextField(16);
+		standortField = new JTextField(16);
+		userLevelCBox = new JComboBox();
+		pwField = new JPasswordField(16);
 		JButton sendBtn = new JButton("Benutzer anlegen");
 		
 		userLevelCBox.addItem("User");
@@ -118,6 +133,53 @@ public class NewUserPanel extends JPanel {
 			}
 		});
 		
+		sendBtn.addActionListener(new ActionListener() {
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Userdb newUser = new Userdb();
+				newUser.getUser().add(new CtProfile());
+				newUser.getUser().get(0).setKnowHows(new KnowHows());
+				newUser.getUser().get(0).setTickets(new Cttickets());
+				
+				String jabberId = vornameField.getText().
+						substring(0,1).toLowerCase()+nachnameField.getText().toLowerCase();
+				
+				newUser.getUser().get(0).setJabber(jabberId);
+				newUser.getUser().get(0).setVorname(vornameField.getText());
+				newUser.getUser().get(0).setNachname(nachnameField.getText());
+				newUser.getUser().get(0).setStandort(standortField.getText());
+				newUser.getUser().get(0).setStatus(userLevelCBox.getSelectedItem().toString());
+				
+				AccountManager am = new AccountManager(pubsub.getConnection());
+				try {
+					am.createAccount(jabberId, pwField.getText());
+				} catch (XMPPException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				Client client = Client.create();
+				try { 
+					WebResource webResource = client
+					   .resource("http://localhost:4434/user/add/");
+					
+					ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
+							.post(ClientResponse.class, newUser);
+			 
+					if (response.getStatus() != 201) {
+						throw new RuntimeException("Failed : HTTP error code : "
+						     + response.getStatus());
+					}
+				} catch (Exception e) {
+						 
+					e.printStackTrace();
+					 
+				}
+				
+			}
+		});
 	}
 
 }

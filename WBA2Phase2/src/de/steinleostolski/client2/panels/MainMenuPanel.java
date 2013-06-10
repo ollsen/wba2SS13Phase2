@@ -246,7 +246,7 @@ public class MainMenuPanel extends JPanel {
 	public void loadProfile() throws JAXBException, IOException {
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/users/");
+				   .resource("http://localhost:4434/user/");
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Userdb.class);

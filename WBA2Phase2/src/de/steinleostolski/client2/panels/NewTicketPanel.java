@@ -46,8 +46,6 @@ public class NewTicketPanel extends JPanel {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		JLabel platzhalter = new JLabel("New Ticket");
-		
 		JButton btnMainMenu = new JButton("Abbrechen");
 		JLabel subjectLabel = new JLabel("Betreff");
 		JLabel priorityLabel = new JLabel("Priorität");
@@ -57,6 +55,7 @@ public class NewTicketPanel extends JPanel {
 		JComboBox priorityCBox = new JComboBox();
 		JTextArea descriptionTArea = new JTextArea(16, 8);
 		descriptionTArea.setLineWrap(true);
+		descriptionTArea.setWrapStyleWord(true);
 		JScrollPane descrptionScroll = new JScrollPane(descriptionTArea, 
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
