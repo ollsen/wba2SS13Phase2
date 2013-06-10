@@ -14,7 +14,7 @@
 							<xs:element name="betreff" type="xs:string"/>
 							<xs:element name="datum" type="xs:dateTime"/>
 							<xs:element name="zustand" type="tn:st_zustand"/>
-							<xs:element name="in_bearbeitung" type="xs:boolean"/>
+							<xs:element name="bearbeitungszustand" type="xs:boolean"/>
 							<xs:element name="tags">
 								<xs:complexType>
 									<xs:sequence>
