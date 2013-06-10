@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<userdb xmlns="http://example.org/ticket" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://example.org/ticket ../schema/UListeSchema.xsd">
+<userdb xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/ticket ../schema/UListeSchema.xsd">
     <user>
         <id>1</id>
         <jabber>admin</jabber>
@@ -145,6 +143,25 @@
         <Standort>CGN</Standort>
         <status>User</status>
         <KnowHows/>
-        <Tickets/>
+        <Tickets>
+            <ticketId>36</ticketId>
+            <ticketId>37</ticketId>
+            <ticketId>38</ticketId>
+            <ticketId>39</ticketId>
+            <ticketId>40</ticketId>
+            <ticketId>41</ticketId>
+            <ticketId>42</ticketId>
+            <ticketId>43</ticketId>
+            <ticketId>44</ticketId>
+            <ticketId>45</ticketId>
+            <ticketId>46</ticketId>
+            <ticketId>47</ticketId>
+            <ticketId>48</ticketId>
+            <ticketId>49</ticketId>
+            <ticketId>50</ticketId>
+            <ticketId>51</ticketId>
+            <ticketId>52</ticketId>
+            <ticketId>53</ticketId>
+        </Tickets>
     </user>
 </userdb>

@@ -2,10 +2,14 @@ package de.steinleostolski.server;
 
 import java.io.IOException;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
@@ -29,12 +33,11 @@ public class SettingResource extends Ressource {
 	}
 	
 	@POST
-	@Produces(MediaType.APPLICATION_XML)
-	@Path("additfield")
-	public Response post(Settings postsetting) throws JAXBException, IOException {
+	@Consumes("text/plain")
+	@Path("addfield")
+	public Response post(String itFieldNew) throws JAXBException, IOException {
 		Settings setting = get();
-		
-		setting.getITBereich().getFachbereich().add(postsetting.getITBereich().getFachbereich().get(0));
+		setting.getITBereich().getFachbereich().add(itFieldNew);
 		
 		schemaLoc = "http://example.org/ticket ../../schema/SettingsSchema.xsd";
 		marshal(Settings.class, setting, "settings.xml", schemaLoc);
@@ -42,4 +45,21 @@ public class SettingResource extends Ressource {
 		return Response.status(201).entity(result).build();
 	}
 	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("remove")
+	public Response delete(@QueryParam("itfield") String itFieldRemove) throws JAXBException, IOException {
+		Settings setting = get();
+		for (int i = 0; i < setting.getITBereich().getFachbereich().size(); i++) {
+			if(setting.getITBereich().getFachbereich().get(i).equals(itFieldRemove)) {
+				setting.getITBereich().getFachbereich().remove(i);
+			}
+		}
+		schemaLoc = "http://example.org/ticket ../../schema/SettingsSchema.xsd";
+		marshal(Settings.class, setting, "settings.xml", schemaLoc);
+		
+		String result = "Eintrag entfernt";
+		return Response.status(201).entity(result).build();
+		
+	}
 }

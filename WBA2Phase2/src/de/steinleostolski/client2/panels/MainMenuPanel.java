@@ -53,16 +53,6 @@ public class MainMenuPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		try {
-			loadProfile();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		JPanel leftNaviPanel = createLeftNavi();
 		
 		JPanel profilePanel = loadProfilePanel();
@@ -97,6 +87,7 @@ public class MainMenuPanel extends JPanel {
 		JButton btnNewTicket = new JButton("New Ticket");
 		JButton btnNewUser = new JButton("New User");
 		JButton btnViewUsers = new JButton("View Users");
+		JButton btnSettings = new JButton ("Settings");
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -110,6 +101,8 @@ public class MainMenuPanel extends JPanel {
 		switch(UserLevel.valueOf(user.getUser().get(0).getStatus().toUpperCase())) {
 		case USER:
 			add(btnEditProfile,gbc);
+			gbc.gridy++;
+			add(btnViewTickets,gbc);
 			gbc.gridy++;
 			add(btnNewTicket,gbc);
 			break;
@@ -128,6 +121,8 @@ public class MainMenuPanel extends JPanel {
 			add(btnNewTicket,gbc);
 			gbc.gridy++;
 			add(btnNewUser,gbc);
+			gbc.gridy++;
+			add(btnSettings, gbc);
 		}
 		
 		btnEditProfile.addActionListener(new ActionListener() {
@@ -170,6 +165,14 @@ public class MainMenuPanel extends JPanel {
 			}
 		});
 		
+		btnSettings.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				app.changePanel(0, 6);
+			}
+		});
+		
 		return panel;
 	}
 
@@ -188,12 +191,7 @@ public class MainMenuPanel extends JPanel {
 		userlevelField = new JLabel("loading");
 		anzahlTicketsfield = new JLabel("loading");
 		
-		idField.setText(String.valueOf(user.getUser().get(0).getId()));
-		nameField.setText(user.getUser().get(0).getVorname()+" "
-				+user.getUser().get(0).getNachname());
-		standortField.setText(user.getUser().get(0).getStandort());
-		userlevelField.setText(user.getUser().get(0).getStatus());
-		anzahlTicketsfield.setText(String.valueOf(user.getUser().get(0).getTickets().getTicketId().size()));
+		refreshProfile();
 		
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -243,24 +241,13 @@ public class MainMenuPanel extends JPanel {
 		return panel;
 	}
 	
-	public void loadProfile() throws JAXBException, IOException {
-		Client client = Client.create();
-		WebResource webResource = client
-				   .resource("http://localhost:4434/user/");
-	    // lets get the XML as a String
-	    String text = webResource.accept("application/xml").get(String.class);
-	    JAXBContext jc = JAXBContext.newInstance(Userdb.class);
-		Unmarshaller unmarshaller = jc.createUnmarshaller();
-		StringReader reader = new StringReader(text);
-		Userdb userdb = (Userdb) unmarshaller.unmarshal(reader);
-		user = new Userdb();
-		
-		for(int i = 0; i < userdb.getUser().size(); i++) {
-			if(userdb.getUser().get(i).getJabber().equalsIgnoreCase(pubsub.getUsername())) {
-				user.getUser().add(userdb.getUser().get(i));
-			}
-		}
-		
+	public void refreshProfile() {
+		idField.setText(String.valueOf(user.getUser().get(0).getId()));
+		nameField.setText(user.getUser().get(0).getVorname()+" "
+				+user.getUser().get(0).getNachname());
+		standortField.setText(user.getUser().get(0).getStandort());
+		userlevelField.setText(user.getUser().get(0).getStatus());
+		anzahlTicketsfield.setText(String.valueOf(user.getUser().get(0).getTickets().getTicketId().size()));
 	}
 	
 	public enum UserLevel {

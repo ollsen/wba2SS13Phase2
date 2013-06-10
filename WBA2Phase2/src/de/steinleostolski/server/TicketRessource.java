@@ -79,10 +79,11 @@ public class TicketRessource extends Ressource{
 		tEintrag.setTicketId(BigInteger.valueOf(ticketId));
 		tEintrag.setBetreff(ticket.getInfos().getBetreff());
 		tEintrag.setDatum(ticket.getInfos().getDatum());
-		tEintrag.setZustand(StZustand.valueOf(ticket.getInfos().getZustand().toString()));
+		tEintrag.setZustand(StZustand.valueOf(ticket.getInfos().getZustand().toUpperCase()));
+		tEintrag.setBearbeitungszustand(false);
 		for(int i = 0; i < ticket.getInfos().getTags().getTag().size(); i++) {
 			tEintrag.getTags().getTag().add(
-					ticket.getInfos().getTags().getTag().get(i).value());
+					ticket.getInfos().getTags().getTag().get(i));
 		}
 		
 		ticketlist.getTeintrag().add(tEintrag);
@@ -94,12 +95,9 @@ public class TicketRessource extends Ressource{
 		userdb = (Userdb) unmarshal(Userdb.class, "user.xml");
 		
 		BigInteger userId = ticket.getInfos().getUser().getId();
-		BigInteger supporterId = ticket.getInfos()
-				.getSupporterList().getSupporter().get(0).getId();
 		
 		for(int i = 0; i < userdb.getUser().size(); i++) {
-			if(userdb.getUser().get(i).getId().equals(userId) ||
-					userdb.getUser().get(i).getId().equals(supporterId))
+			if(userdb.getUser().get(i).getId().equals(userId))
 				userdb.getUser().get(i).getTickets().getTicketId()
 				.add(BigInteger.valueOf(ticketId));
 		}
@@ -191,7 +189,7 @@ public class TicketRessource extends Ressource{
 			@QueryParam("status")String zustand) throws JAXBException, IOException {
 		Ticket ticket = getTicket(id);
 		
-		ticket.getInfos().setZustand(de.steinleostolski.ticket.StZustand.fromValue(zustand));
+		ticket.getInfos().setZustand(zustand);
 		
 		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
 		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);

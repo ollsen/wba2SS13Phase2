@@ -5,7 +5,7 @@
         <betreff>Internet gelöscht</betreff>
         <datum>2001-12-31T12:00:00</datum>
         <zustand>niedrig</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -15,7 +15,7 @@
         <betreff>Kein Bild</betreff>
         <datum>2001-12-31T12:00:00</datum>
         <zustand>hoch</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Software</tag>
         </tags>
@@ -25,7 +25,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-05-14T21:47:22.139+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Software</tag>
         </tags>
@@ -35,7 +35,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-05-14T21:58:48.263+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -45,7 +45,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-05-14T22:03:22.937+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>OSX</tag>
         </tags>
@@ -55,7 +55,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-05-14T22:04:19.984+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -65,7 +65,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-05-14T22:04:47.879+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -75,8 +75,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-05-14T22:06:15.291+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>true</in_bearbeitung>
-<<<<<<< HEAD
+        <bearbeitungszustand>true</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -86,7 +85,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:56:49.502+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -96,7 +95,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:56:57.834+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -106,7 +105,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:57:30.301+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -116,7 +115,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:57:35.582+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -126,7 +125,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:57:40.551+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -136,7 +135,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:57:51.194+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -146,7 +145,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:57:57.687+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -156,7 +155,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:58:10.425+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -166,7 +165,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:58:14.741+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -176,7 +175,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:58:21.580+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -186,7 +185,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:58:25.543+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -196,7 +195,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:58:30.456+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -206,7 +205,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:10.899+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -216,7 +215,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:16.929+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -226,7 +225,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:20.310+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -236,7 +235,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:23.006+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -246,7 +245,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:26.637+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -256,7 +255,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:29.515+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -266,7 +265,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:32.349+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -276,7 +275,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:35.455+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -286,7 +285,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:48.935+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -296,7 +295,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:54.468+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -306,7 +305,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T20:59:58.311+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -316,7 +315,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T21:00:01.199+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -326,7 +325,7 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T21:00:04.000+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
         </tags>
@@ -336,11 +335,204 @@
         <betreff>Testbetreff</betreff>
         <datum>2013-06-07T21:00:06.500+02:00</datum>
         <zustand>normal</zustand>
-        <in_bearbeitung>false</in_bearbeitung>
-=======
->>>>>>> branch 'xmpp' of https://github.com/ollsen/wba2SS13Phase2.git
+        <bearbeitungszustand>false</bearbeitungszustand>
         <tags>
             <tag>Hardware</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>36</ticket_id>
+        <betreff>Dies ist ein Test</betreff>
+        <datum>2013-06-10T14:24:32.622+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Hardware</tag>
+            <tag>Software</tag>
+            <tag>Windows</tag>
+            <tag>OSX</tag>
+            <tag>Android</tag>
+            <tag>iOS</tag>
+            <tag>Netzwerk</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>37</ticket_id>
+        <betreff>Noch ein Test</betreff>
+        <datum>2013-06-10T14:29:31.680+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Hardware</tag>
+            <tag>Software</tag>
+            <tag>OSX</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>38</ticket_id>
+        <betreff>dritter Test</betreff>
+        <datum>2013-06-10T14:36:12.121+02:00</datum>
+        <zustand>hoch</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Hardware</tag>
+            <tag>Windows</tag>
+            <tag>Android</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>39</ticket_id>
+        <betreff>Hallo</betreff>
+        <datum>2013-06-10T14:48:44.342+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>40</ticket_id>
+        <betreff>gfdagfdgdf</betreff>
+        <datum>2013-06-10T14:49:14.306+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Software</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>41</ticket_id>
+        <betreff>Popup test</betreff>
+        <datum>2013-06-10T15:55:57.271+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Software</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>42</ticket_id>
+        <betreff>fdsfdsfg</betreff>
+        <datum>2013-06-10T16:03:13.458+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>43</ticket_id>
+        <betreff>fdsfdsfg</betreff>
+        <datum>2013-06-10T16:03:19.328+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>44</ticket_id>
+        <betreff>fdsfdsfg</betreff>
+        <datum>2013-06-10T16:03:21.774+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>45</ticket_id>
+        <betreff>gfdgfdg</betreff>
+        <datum>2013-06-10T16:10:19.252+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Software</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>46</ticket_id>
+        <betreff>gfdagdfg</betreff>
+        <datum>2013-06-10T16:19:46.047+02:00</datum>
+        <zustand>hoch</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Software</tag>
+            <tag>OSX</tag>
+            <tag>Android</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>47</ticket_id>
+        <betreff>gdfagdg</betreff>
+        <datum>2013-06-10T16:22:03.791+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Hardware</tag>
+            <tag>Windows</tag>
+            <tag>iOS</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>48</ticket_id>
+        <betreff>gfdagdfg</betreff>
+        <datum>2013-06-10T16:30:07.759+02:00</datum>
+        <zustand>hoch</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>OSX</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>49</ticket_id>
+        <betreff>fsdagfgfd</betreff>
+        <datum>2013-06-10T16:34:58.220+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+            <tag>Android</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>50</ticket_id>
+        <betreff>fdsfas</betreff>
+        <datum>2013-06-10T16:42:52.630+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>51</ticket_id>
+        <betreff>gfdagfdg</betreff>
+        <datum>2013-06-10T16:44:12.657+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>52</ticket_id>
+        <betreff>fsadfdsa</betreff>
+        <datum>2013-06-10T16:45:57.371+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Windows</tag>
+        </tags>
+    </teintrag>
+    <teintrag>
+        <ticket_id>53</ticket_id>
+        <betreff>gfdg</betreff>
+        <datum>2013-06-10T16:50:05.392+02:00</datum>
+        <zustand>niedrig</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Software</tag>
         </tags>
     </teintrag>
 </ticketlist>

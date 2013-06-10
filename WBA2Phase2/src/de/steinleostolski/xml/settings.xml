@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<settings xmlns="http://www.example.org/ticket" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://www.example.org/ticket ../schema/SettingsSchema.xsd ">
-  <IT-Bereich>
-    <Fachbereich>Hardware</Fachbereich>
-    <Fachbereich>Software</Fachbereich>
-  </IT-Bereich>
+<settings xmlns="http://www.example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/ticket ../../schema/SettingsSchema.xsd">
+    <IT-Bereich>
+        <Fachbereich>Hardware</Fachbereich>
+        <Fachbereich>Software</Fachbereich>
+        <Fachbereich>OSX</Fachbereich>
+        <Fachbereich>Android</Fachbereich>
+    </IT-Bereich>
 </settings>

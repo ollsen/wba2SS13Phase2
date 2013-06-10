@@ -76,10 +76,10 @@ public class TicketTestClient {
 				ticket.getInfos().setDatum(xmlCalendar);
 				ticket.getInfos().setStandort("CGN");
 				ticket.getInfos().getSupporterList().getSupporter().add(supporter);
-				ticket.getInfos().getTags().getTag().add(StKnowhow.HARDWARE);
+				ticket.getInfos().getTags().getTag().add("Hardware");
 				ticket.getInfos().getUser().setId(BigInteger.valueOf(1));
 				ticket.getInfos().getUser().setValue("Max Mustermann");
-				ticket.getInfos().setZustand(StZustand.NORMAL);
+				ticket.getInfos().setZustand("Normal");
 				
 		 
 				ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
