@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -63,30 +66,57 @@ public class LoginWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
+        username.addKeyListener(new KeyAdapter() {
+        	
+        	public void keyReleased(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        			login();
+        	}
+		});
+        
+        password.addKeyListener(new KeyAdapter() {
+        	
+        	public void keyReleased(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        			login();
+        	}
+		});
+        
+        loginB.addKeyListener(new KeyAdapter() {
+        	
+        	public void keyReleased(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        			login();
+        	}
+		});
+        
         loginB.addActionListener(new ActionListener() {
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				pubsub = new PubsubClient();
-				try {
-					pubsub.login(username.getText(), password.getText());
-				} catch (XMPPException e) {
-					status.setForeground(Color.RED);
-					status.setText("fehlgeschlagen");
-				}
-				
-				if(pubsub.getConnection().isAuthenticated()) {
-					pubsub.setUsername(username.getText());
-					status.setForeground(Color.GREEN);
-					status.setText("erfolgreich");
-					dispose();
-					Application app = new Application(pubsub);
-					app.setVisible(true);
-				}
+				login();
 			}
 		});
         
+        
 	}
+	public void login() {
+		pubsub = new PubsubClient();
+		try {
+			pubsub.login(username.getText(), password.getText());
+		} catch (XMPPException e) {
+			status.setForeground(Color.RED);
+			status.setText("fehlgeschlagen");
+		}
+		
+		if(pubsub.getConnection().isAuthenticated()) {
+			pubsub.setUsername(username.getText());
+			status.setForeground(Color.GREEN);
+			status.setText("erfolgreich");
+			dispose();
+			Application app = new Application(pubsub);
+			app.setVisible(true);
+		}
+    }
 
 }

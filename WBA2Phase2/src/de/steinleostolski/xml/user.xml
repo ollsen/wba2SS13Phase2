@@ -5,10 +5,11 @@
         <jabber>admin</jabber>
         <Vorname>Max</Vorname>
         <Nachname>Mustermann</Nachname>
-        <Standort>CGN</Standort>
+        <Standort>Max</Standort>
         <status>admin</status>
         <KnowHows>
-            <KnowHow>Software</KnowHow>
+            <KnowHow>Hardware</KnowHow>
+            <KnowHow>OSX</KnowHow>
         </KnowHows>
         <Tickets>
             <ticketId>3</ticketId>
@@ -43,6 +44,7 @@
             <ticketId>33</ticketId>
             <ticketId>34</ticketId>
             <ticketId>35</ticketId>
+            <ticketId>54</ticketId>
         </Tickets>
     </user>
     <user>
@@ -163,5 +165,45 @@
             <ticketId>52</ticketId>
             <ticketId>53</ticketId>
         </Tickets>
+    </user>
+    <user>
+        <id>8</id>
+        <jabber>dostolski</jabber>
+        <Vorname>David</Vorname>
+        <Nachname>Ostolski</Nachname>
+        <Standort>David</Standort>
+        <status>Supporter</status>
+        <KnowHows/>
+        <Tickets/>
+    </user>
+    <user>
+        <id>9</id>
+        <jabber>aadmin</jabber>
+        <Vorname>Admin</Vorname>
+        <Nachname>Admin</Nachname>
+        <Standort>dev/null</Standort>
+        <status>Admin</status>
+        <KnowHows/>
+        <Tickets/>
+    </user>
+    <user>
+        <id>10</id>
+        <jabber>mpower</jabber>
+        <Vorname>Max</Vorname>
+        <Nachname>Power</Nachname>
+        <Standort>BER</Standort>
+        <status>Supporter</status>
+        <KnowHows/>
+        <Tickets/>
+    </user>
+    <user>
+        <id>11</id>
+        <jabber>bbla</jabber>
+        <Vorname>Bla</Vorname>
+        <Nachname>Bla</Nachname>
+        <Standort>Bla</Standort>
+        <status>Supporter</status>
+        <KnowHows/>
+        <Tickets/>
     </user>
 </userdb>

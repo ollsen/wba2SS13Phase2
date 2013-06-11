@@ -535,4 +535,15 @@
             <tag>Software</tag>
         </tags>
     </teintrag>
+    <teintrag>
+        <ticket_id>54</ticket_id>
+        <betreff>fdsjlkfdsaf</betreff>
+        <datum>2013-06-11T18:23:03.280+02:00</datum>
+        <zustand>normal</zustand>
+        <bearbeitungszustand>false</bearbeitungszustand>
+        <tags>
+            <tag>Software</tag>
+            <tag>Android</tag>
+        </tags>
+    </teintrag>
 </ticketlist>

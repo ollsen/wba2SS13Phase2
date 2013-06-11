@@ -97,4 +97,34 @@ public class UserResource extends Ressource {
 		System.out.println(result);
 		return Response.noContent().entity(result).build();
 	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}/edit")
+	public Response editProfile(@PathParam("id") BigInteger id, Userdb user) throws JAXBException, IOException {
+		Userdb userdb = (Userdb) unmarshal(Userdb.class, "user.xml");
+		String result = null;
+		for(int i = 0; i < userdb.getUser().size(); i++) {
+			if(userdb.getUser().get(i).getId().equals(id)) {
+				userdb.getUser().get(i).setVorname(user.getUser().get(0).getVorname());
+				userdb.getUser().get(i).setNachname(user.getUser().get(0).getNachname());
+				userdb.getUser().get(i).setStandort(user.getUser().get(0).getStandort());
+				userdb.getUser().get(i).getKnowHows().getKnowHow().clear();
+				
+				for(int j = 0; j < user.getUser().get(0).getKnowHows().getKnowHow().size(); j++) {
+					userdb.getUser().get(i).getKnowHows().getKnowHow()
+					.add(user.getUser().get(0).getKnowHows().getKnowHow().get(j));
+				}
+				result = "Benutzer editiert";
+				break;
+			} else {
+				result = "Benutzer nicht gefunden";
+			}
+		}
+		schemaLoc = "http://example.org/ticket ../schema/UListeSchema.xsd";
+		marshal(Userdb.class, userdb, "user.xml", schemaLoc);
+		
+		System.out.println(result);
+		return Response.noContent().entity(result).build();
+	}
 }

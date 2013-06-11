@@ -44,8 +44,7 @@ public class UserTestClient {
 			profile.setStandort("CGN");
 			profile.setStatus("supporter");
 			
-			knowhow.getKnowHow().add(Stknowhow.HARDWARE);
-			knowhow.getKnowHow().add(Stknowhow.SOFTWARE);
+			knowhow.getKnowHow().add("Hardware");
 			profile.setKnowHows(knowhow);
 			profile.setTickets(tickets);
 			user.getUser().add(profile);

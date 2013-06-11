@@ -38,6 +38,7 @@ public class Application extends JFrame {
 	private Userdb user;
 	private MainMenuPanel mmPanel;
 	private NewTicketPanel ntPanel;
+	private EditUserPanel euPanel;
 	
 	private List<JPanel> panelList;
 	
@@ -63,7 +64,7 @@ public class Application extends JFrame {
 		setTitle("Ticket System");
 		
 		mmPanel = new MainMenuPanel(this, pubsub, user);
-		EditUserPanel euPanel = new EditUserPanel(this, pubsub, user);
+		euPanel = new EditUserPanel(this, pubsub, user);
 		ViewUserPanel vuPanel = new ViewUserPanel(this, pubsub, user);
 		ViewTicketPanel vtPanel = new ViewTicketPanel(this, pubsub, user);
 		NewUserPanel nuPanel = new NewUserPanel(this, pubsub, user);
@@ -92,11 +93,17 @@ public class Application extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		} else
+		
+		if(newPanel ==1) {
+			euPanel.refresh();
+		} else
 		
 		if(newPanel == 5) {
 			ntPanel.refreshItFields();
 		}
+		
+		
 	}
 	
 	public void loadProfile() throws JAXBException, IOException {

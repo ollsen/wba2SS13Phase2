@@ -1,6 +1,7 @@
 package de.steinleostolski.client2.panels;
 
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,13 +10,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 
 import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.sasl.SASLMechanism.Response;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -172,6 +177,7 @@ public class NewUserPanel extends JPanel {
 						throw new RuntimeException("Failed : HTTP error code : "
 						     + response.getStatus());
 					}
+					showPopup(response.getEntity(String.class));
 				} catch (Exception e) {
 						 
 					e.printStackTrace();
@@ -180,6 +186,37 @@ public class NewUserPanel extends JPanel {
 				
 			}
 		});
+	}
+	
+	private void showPopup(String status) {
+		int x = getSize().width / 2;
+	    int y = getSize().height / 2;
+		JPanel popupPanel = new JPanel(new BorderLayout());
+		JLabel statusLabel = new JLabel(status);
+		JButton popupButton = new JButton("Schliessen");
+		popupPanel.add(statusLabel, BorderLayout.CENTER);
+		popupPanel.add(popupButton, BorderLayout.SOUTH);
+		PopupFactory factory = PopupFactory.getSharedInstance();
+		final Popup popup = factory.getPopup(new JFrame(), popupPanel, x, y);
+		popup.show();
+		
+		popupButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				popup.hide();
+				app.changePanel(4, 0);
+				resetFields();
+			}
+		});
+	}
+	
+	protected void resetFields() {
+		vornameField.setText("");
+		nachnameField.setText("");
+		pwField.setText("");
+		standortField.setText("");
+		userLevelCBox.setSelectedIndex(0);
 	}
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Ticket xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="46" xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd">
+    <Infos>
+        <Betreff>gfdagdfg</Betreff>
+        <User id="7">Oliver Steinle</User>
+        <Standort>CGN</Standort>
+        <SupporterList/>
+        <Datum>2013-06-10T16:19:46.047+02:00</Datum>
+        <Beschreibung>jlkfjlsfgafsaf</Beschreibung>
+        <Zustand>Hoch</Zustand>
+        <Tags>
+            <Tag>Software</Tag>
+            <Tag>OSX</Tag>
+            <Tag>Android</Tag>
+        </Tags>
+    </Infos>
+    <Antworten/>
+</Ticket>

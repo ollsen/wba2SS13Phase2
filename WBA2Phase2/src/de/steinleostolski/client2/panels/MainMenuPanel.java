@@ -65,7 +65,7 @@ public class MainMenuPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 1;
-		gbc.gridheight = 5;
+		gbc.gridheight = 6;
 		add(leftNaviPanel,gbc);
 		
 		gbc.gridx = 1;
