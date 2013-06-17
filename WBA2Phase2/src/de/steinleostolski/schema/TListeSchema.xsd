@@ -11,9 +11,10 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="ticket_id" type="xs:nonNegativeInteger"/>
+							<xs:element name="ersteller_id" type="xs:nonNegativeInteger"/>
 							<xs:element name="betreff" type="xs:string"/>
 							<xs:element name="datum" type="xs:dateTime"/>
-							<xs:element name="zustand" type="tn:st_zustand"/>
+							<xs:element name="zustand" type="xs:string"/>
 							<xs:element name="bearbeitungszustand" type="xs:boolean"/>
 							<xs:element name="tags">
 								<xs:complexType>
@@ -28,13 +29,4 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-	<xs:simpleType name="st_zustand">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="niedrig"/>
-			<xs:enumeration value="normal"/>
-			<xs:enumeration value="hoch"/>
-			<xs:enumeration value="kritisch"/>
-		</xs:restriction>
-	</xs:simpleType>
 </xs:schema>

@@ -142,9 +142,8 @@ public class SettingsPanel extends JPanel {
 		String itField = itFieldList.getModel().getElementAt(itFieldList.getSelectedIndex()).toString();
 		try { 
 			WebResource webResource = client
-			   .resource("http://localhost:4434/settings/remove?itfield="+itField);
+			   .resource("http://localhost:4434/settings/delete?itfield="+itField);
 			
-			System.out.println("http://localhost:4434/settings/remove?itfield="+itField);
 			ClientResponse response = webResource.accept(MediaType.APPLICATION_XML)
 					.delete(ClientResponse.class);
 	 

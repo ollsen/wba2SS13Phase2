@@ -100,16 +100,12 @@ public class MainMenuPanel extends JPanel {
 		
 		switch(UserLevel.valueOf(user.getUser().get(0).getStatus().toUpperCase())) {
 		case USER:
+		case SUPPORTER:
 			add(btnEditProfile,gbc);
 			gbc.gridy++;
 			add(btnViewTickets,gbc);
 			gbc.gridy++;
 			add(btnNewTicket,gbc);
-			break;
-		case SUPPORTER:
-			add(btnEditProfile,gbc);
-			gbc.gridy++;
-			add(btnViewTickets,gbc);
 			break;
 		case ADMIN:
 			add(btnEditProfile,gbc);

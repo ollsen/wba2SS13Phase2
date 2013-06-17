@@ -23,6 +23,7 @@ import de.steinleostolski.client2.panels.NewTicketPanel;
 import de.steinleostolski.client2.panels.NewUserPanel;
 import de.steinleostolski.client2.panels.SettingsPanel;
 import de.steinleostolski.client2.panels.ViewTicketPanel;
+import de.steinleostolski.client2.panels.ViewTicketlistPanel;
 import de.steinleostolski.client2.panels.ViewUserPanel;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.PubsubClient;
@@ -39,6 +40,8 @@ public class Application extends JFrame {
 	private MainMenuPanel mmPanel;
 	private NewTicketPanel ntPanel;
 	private EditUserPanel euPanel;
+	private ViewTicketlistPanel vtlPanel;
+	private ViewTicketPanel vtPanel;
 	
 	private List<JPanel> panelList;
 	
@@ -66,14 +69,15 @@ public class Application extends JFrame {
 		mmPanel = new MainMenuPanel(this, pubsub, user);
 		euPanel = new EditUserPanel(this, pubsub, user);
 		ViewUserPanel vuPanel = new ViewUserPanel(this, pubsub, user);
-		ViewTicketPanel vtPanel = new ViewTicketPanel(this, pubsub, user);
+		vtlPanel = new ViewTicketlistPanel(this, pubsub, user);
 		NewUserPanel nuPanel = new NewUserPanel(this, pubsub, user);
 		ntPanel = new NewTicketPanel(this, pubsub, user);
 		SettingsPanel sPanel = new SettingsPanel(this, pubsub, user);
+		vtPanel = new ViewTicketPanel(this, pubsub, user);
 		panelList.add(0, mmPanel); panelList.add(1, euPanel);
-		panelList.add(2, vuPanel); panelList.add(3, vtPanel);
+		panelList.add(2, vuPanel); panelList.add(3, vtlPanel);
 		panelList.add(4, nuPanel); panelList.add(5, ntPanel);
-		panelList.add(6, sPanel);
+		panelList.add(6, sPanel); panelList.add(7, vtPanel);
 		getContentPane().add(panelList.get(0), BorderLayout.CENTER);
 	}
 	
@@ -101,6 +105,15 @@ public class Application extends JFrame {
 		
 		if(newPanel == 5) {
 			ntPanel.refreshItFields();
+		} 
+		
+		if (newPanel == 7) {
+			try {
+				vtPanel.loadTicket(vtlPanel.getTicketId());
+			} catch (JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		

@@ -66,7 +66,9 @@ public class TicketRessource extends Ressource{
 	@Path("add")
 	public Response post(Ticket ticket) throws JAXBException, IOException {
 		Ticketlist ticketlist = get();
-		int ticketId = ticketlist.getTeintrag().get(ticketlist.getTeintrag().size()-1)
+		int ticketId = 1;
+		if(ticketlist.getTeintrag().size() != 0)
+		ticketId = ticketlist.getTeintrag().get(ticketlist.getTeintrag().size()-1)
 				.getTicketId().intValue()+1;
 		
 		
@@ -77,9 +79,10 @@ public class TicketRessource extends Ressource{
 		Teintrag tEintrag = new Teintrag();
 		tEintrag.setTags(new Tags());
 		tEintrag.setTicketId(BigInteger.valueOf(ticketId));
+		tEintrag.setErstellerId(ticket.getInfos().getUser().getId());
 		tEintrag.setBetreff(ticket.getInfos().getBetreff());
 		tEintrag.setDatum(ticket.getInfos().getDatum());
-		tEintrag.setZustand(StZustand.valueOf(ticket.getInfos().getZustand().toUpperCase()));
+		tEintrag.setZustand(ticket.getInfos().getZustand());
 		tEintrag.setBearbeitungszustand(false);
 		for(int i = 0; i < ticket.getInfos().getTags().getTag().size(); i++) {
 			tEintrag.getTags().getTag().add(
@@ -200,7 +203,7 @@ public class TicketRessource extends Ressource{
 		
 		for(int i = 0; i < tList.getTeintrag().size(); i++) {
 			if(tList.getTeintrag().get(i).getTicketId().equals(id))
-				tList.getTeintrag().get(i).setZustand(StZustand.fromValue(zustand));
+				tList.getTeintrag().get(i).setZustand(zustand);
 		}
 		
 		schemaLoc = "http://example.org/ticket ../schema/TListeSchema.xsd";

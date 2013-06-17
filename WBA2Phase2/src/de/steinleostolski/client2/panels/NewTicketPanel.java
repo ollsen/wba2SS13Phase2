@@ -122,9 +122,9 @@ public class NewTicketPanel extends JPanel {
 		
 		JButton sendBtn = new JButton("Senden");
 		
-		priorityCBox.addItem("Niedrig");
-		priorityCBox.addItem("Normal");
-		priorityCBox.addItem("Hoch");
+		priorityCBox.addItem("niedrig");
+		priorityCBox.addItem("normal");
+		priorityCBox.addItem("hoch");
 		
 		gbc.insets = new Insets(2, 2, 2, 2);
 		gbc.anchor= GridBagConstraints.WEST;

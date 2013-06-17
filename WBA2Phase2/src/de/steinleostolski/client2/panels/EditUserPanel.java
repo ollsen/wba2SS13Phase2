@@ -143,7 +143,6 @@ public class EditUserPanel extends JPanel {
 		
 		try {
 			itFieldList.setModel(loadItFields());
-			System.out.println(loadItFields().getSize());
 		} catch (JAXBException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -306,7 +305,7 @@ public class EditUserPanel extends JPanel {
 	public void refresh() {
 		try {
 			loadProfile();
-			loadItFields();
+			itFieldList.setModel(loadItFields());
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

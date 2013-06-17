@@ -65,6 +65,7 @@
 			<xs:element name="Datum" type="xs:dateTime"/>
 			<xs:element name="Beschreibung" type="xs:string"/>
 			<xs:element name="Zustand" type="xs:string"/>
+			<xs:element name="in_bearbeitung" type="xs:boolean" default="false"/>
 			<xs:element name="Tags">
 				<xs:complexType>
 					<xs:sequence>
@@ -87,6 +88,7 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="Datum" type="xs:dateTime"/>
 			<xs:element name="Antwort" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>

@@ -127,6 +127,8 @@ public class NodeClient {
 			affiliations = mgr.getAffiliations();
 			for(int i = 0; i < affiliations.size(); i++) {
 				System.out.println(affiliations.get(i).getNodeId());
+				leaf = mgr.getNode(affiliations.get(i).getNodeId());
+				System.out.println(leaf.getSubscriptions().get(0).getJid());
 			}
 			break;
 		case 4:

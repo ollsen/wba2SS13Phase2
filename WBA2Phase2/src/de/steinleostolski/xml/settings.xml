@@ -2,9 +2,5 @@
 <settings xmlns="http://www.example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/ticket ../../schema/SettingsSchema.xsd">
     <IT-Bereich>
         <Fachbereich>Hardware</Fachbereich>
-        <Fachbereich>Software</Fachbereich>
-        <Fachbereich>OSX</Fachbereich>
-        <Fachbereich>Android</Fachbereich>
-        <Fachbereich>Windows</Fachbereich>
     </IT-Bereich>
 </settings>
