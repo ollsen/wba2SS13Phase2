@@ -15,6 +15,7 @@ import org.jivesoftware.smackx.pubsub.SimplePayload;
 
 import de.steinleostolski.jaxb.Ressource;
 import de.steinleostolski.ticket.CtAntwort;
+import de.steinleostolski.ticket.CtInfo.SupporterList.Supporter;
 import de.steinleostolski.ticket.CtTicket.Antworten;
 import de.steinleostolski.ticket.Ticket;
 import de.steinleostolski.tickets.StZustand;
@@ -194,9 +195,11 @@ public class TicketRessource extends Ressource{
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_XML)
-	@Path("{id}/edit")
-	public Response setStatus(@PathParam("id") BigInteger id) throws JAXBException, IOException {
+	@Path("{id}/editSupporter")
+	public Response setStatus(@PathParam("id") BigInteger id, Ticket newTicket) throws JAXBException, IOException {
 		Ticket ticket = getTicket(id);
+		
+		ticket = newTicket;
 		
 		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
 		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);

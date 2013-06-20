@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Ticket xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="8" xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd">
+    <Infos>
+        <Betreff>fafcavca</Betreff>
+        <User id="2">Oliver Steinle</User>
+        <Standort>Cologne</Standort>
+        <SupporterList/>
+        <Datum>2013-06-20T18:01:21.144+02:00</Datum>
+        <Beschreibung>favcavcer</Beschreibung>
+        <Zustand>niedrig</Zustand>
+        <in_bearbeitung>false</in_bearbeitung>
+        <Tags>
+            <Tag>Hardware</Tag>
+        </Tags>
+    </Infos>
+    <Antworten/>
+</Ticket>

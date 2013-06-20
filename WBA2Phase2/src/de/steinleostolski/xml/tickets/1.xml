@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Ticket xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1" xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd">
+    <Infos>
+        <Betreff>test</Betreff>
+        <User id="2">Oliver Steinle</User>
+        <Standort>Cologne</Standort>
+        <SupporterList>
+            <Supporter id="1">Max Mustermann</Supporter>
+            <Supporter id="1">Max Mustermann</Supporter>
+        </SupporterList>
+        <Datum>2013-06-17T22:33:52.157+02:00</Datum>
+        <Beschreibung>Hi cool bla unso</Beschreibung>
+        <Zustand>normal</Zustand>
+        <in_bearbeitung>true</in_bearbeitung>
+        <Tags>
+            <Tag>Hardware</Tag>
+        </Tags>
+    </Infos>
+    <Antworten/>
+</Ticket>

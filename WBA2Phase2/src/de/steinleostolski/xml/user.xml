@@ -10,7 +10,11 @@
         <KnowHows>
             <KnowHow>Hardware</KnowHow>
         </KnowHows>
-        <Tickets/>
+        <Tickets>
+            <ticketId>9</ticketId>
+            <ticketId>13</ticketId>
+            <ticketId>14</ticketId>
+        </Tickets>
     </user>
     <user>
         <id>2</id>
@@ -29,6 +33,10 @@
             <ticketId>6</ticketId>
             <ticketId>7</ticketId>
             <ticketId>8</ticketId>
+            <ticketId>10</ticketId>
+            <ticketId>11</ticketId>
+            <ticketId>12</ticketId>
+            <ticketId>15</ticketId>
         </Tickets>
     </user>
 </userdb>

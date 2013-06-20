@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -60,6 +62,10 @@ public class Application extends JFrame {
 	private EditUserPanel euPanel;
 	private ViewTicketlistPanel vtlPanel;
 	private ViewTicketPanel vtPanel;
+	private ViewUserPanel vuPanel;
+	private NewUserPanel nuPanel;
+	private SettingsPanel sPanel;
+	private int currentIndex;
 	
 	private JButton notificationBtn;
 	private Thread thread;
@@ -92,17 +98,18 @@ public class Application extends JFrame {
 		
 		mmPanel = new MainMenuPanel(this, pubsub, user);
 		euPanel = new EditUserPanel(this, pubsub, user);
-		ViewUserPanel vuPanel = new ViewUserPanel(this, pubsub, user);
+		vuPanel = new ViewUserPanel(this, pubsub, user);
 		vtlPanel = new ViewTicketlistPanel(this, pubsub, user);
-		NewUserPanel nuPanel = new NewUserPanel(this, pubsub, user);
+		nuPanel = new NewUserPanel(this, pubsub, user);
 		ntPanel = new NewTicketPanel(this, pubsub, user);
-		SettingsPanel sPanel = new SettingsPanel(this, pubsub, user);
+		sPanel = new SettingsPanel(this, pubsub, user);
 		vtPanel = new ViewTicketPanel(this, pubsub, user);
 		panelList.add(0, mmPanel); panelList.add(1, euPanel);
 		panelList.add(2, vuPanel); panelList.add(3, vtlPanel);
 		panelList.add(4, nuPanel); panelList.add(5, ntPanel);
 		panelList.add(6, sPanel); panelList.add(7, vtPanel);
 		getContentPane().add(panelList.get(0), BorderLayout.CENTER);
+		currentIndex = 0;
 		
 		// Benachrichtigungsbutton
 		notificationBtn = new JButton("Benachrichtigung");
@@ -119,8 +126,11 @@ public class Application extends JFrame {
 	
 	@SuppressWarnings("deprecation")
 	protected void openNotifyFrame() {
-		if(thread.isAlive())
+		if(thread.isAlive()) {
 			thread.stop();
+			notificationBtn.setForeground(Color.BLACK);
+		}
+			
 	    notifyFrame.setSize(200, 600);
 	    notifyFrame.show();
 	}
@@ -129,6 +139,7 @@ public class Application extends JFrame {
 		panelList.get(oldPanel).setVisible(false);
 		getContentPane().add(panelList.get(newPanel), BorderLayout.CENTER);
 		panelList.get(newPanel).setVisible(true);
+		currentIndex = newPanel;
 		
 		if(newPanel == 0) {
 			try {
@@ -143,15 +154,17 @@ public class Application extends JFrame {
 			}
 		} else
 		
-		if(newPanel ==1) {
+		if(newPanel ==1 ) {
 			euPanel.refresh();
 		} else
-		
+		if (newPanel == 3) {
+			vtlPanel.refresh();
+		} else 
 		if(newPanel == 5) {
 			ntPanel.refreshItFields();
 		} 
 		
-		if (newPanel == 7) {
+		if (newPanel == 7 && oldPanel != 0) {
 			try {
 				vtPanel.loadTicket(vtlPanel.getTicketId());
 			} catch (JAXBException e) {
@@ -234,7 +247,7 @@ public class Application extends JFrame {
 		}
 	}
 	
-	protected void createNotifyPanel(Notification notify) {
+	protected void createNotifyPanel(final Notification notify) {
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(200, 150));
 		panel.setLayout(new GridLayout(4, 1));
@@ -247,6 +260,50 @@ public class Application extends JFrame {
 		notifyFrame.getContentPane().add(panel);
 		notifyFrame.validate();
 		notifyFrame.repaint();
+		
+		panel.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				notifyFrame.dispose();
+				try {
+					vtPanel.loadTicket(notify.getTicketId());
+				} catch (JAXBException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				changePanel(currentIndex, 7);
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				try {
+					vtPanel.loadTicket(notify.getTicketId());
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				changePanel(0, 7);
+			}
+		});
 	}
 	
 	private void blinkingButton() {

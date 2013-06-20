@@ -235,6 +235,12 @@ public class ViewTicketlistPanel extends JPanel {
 		return panel;
 	}
 	
+	public void refresh() {
+		String selectedItem = filterComboBox.getSelectedItem().toString();
+		data = filterTicketList(selectedItem);
+		tableModel.setDataVector(data, columnNames);
+	}
+	
 	protected void deleteTicket() {
 		try {
 			Client client = Client.create();

@@ -127,6 +127,14 @@ public class ViewTicketPanel extends JPanel {
 			}
 		});
 		
+		takeBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				safeNewSupporter();
+			}
+		});
+		
 	}
 	
 	private JPanel loadInfoPanel() {
@@ -145,18 +153,25 @@ public class ViewTicketPanel extends JPanel {
 		
 		datumField = new JTextArea(1, 32);
 		datumField.setBackground(panel.getBackground());
+		datumField.setEditable(false);
 		betreffField = new JTextArea();
 		betreffField.setBackground(panel.getBackground());
+		betreffField.setEditable(false);
 		creatorField = new JTextArea();
 		creatorField.setBackground(panel.getBackground());
+		creatorField.setEditable(false);
 		standortField = new JTextArea();
 		standortField.setBackground(panel.getBackground());
+		standortField.setEditable(false);
 		priorityField = new JTextArea();
 		priorityField.setBackground(panel.getBackground());
+		priorityField.setEditable(false);
 		inProgressField = new JTextArea();
 		inProgressField.setBackground(panel.getBackground());
+		inProgressField.setEditable(false);
 		descriptionTArea = new JTextArea(2, 48);
 		descriptionTArea.setBackground(panel.getBackground());
+		descriptionTArea.setEditable(false);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -197,13 +212,13 @@ public class ViewTicketPanel extends JPanel {
 	}
 
 	private JPanel loadAnswerPanel() {
+		
 		AnswerMainPanel = new JPanel();
 		AnswerMainPanel.setBorder(BorderFactory.createTitledBorder("Antworten"));
 		AnswerMainPanel.setLayout(new BoxLayout(AnswerMainPanel, BoxLayout.Y_AXIS));
 		
 		JPanel answerField = setAnswer();
 		AnswerMainPanel.add(answerField);
-		
 		
 		return AnswerMainPanel;
 	}
@@ -276,8 +291,43 @@ public class ViewTicketPanel extends JPanel {
 		return panel;
 	}
 	
+	protected void safeNewSupporter() {
+		
+		de.steinleostolski.ticket.CtInfo.SupporterList.Supporter supporter = new de.steinleostolski.ticket.CtInfo.SupporterList.Supporter();
+		supporter.setId(user.getUser().get(0).getId());
+		supporter.setValue(user.getUser().get(0).getVorname()+" "+user.getUser().get(0).getNachname());
+		ticket.getInfos().getSupporterList().getSupporter().add(supporter);
+		ticket.getInfos().setInBearbeitung(true);
+		
+		Client client = Client.create();
+		
+		try {
+			WebResource webResource = client
+					   .resource("http://localhost:4434/ticket/"+ticket.getId().toString()+"/editSupporter");
+					
+				ClientResponse response = webResource.accept("application/xml")
+							.put(ClientResponse.class, ticket);
+			 
+				if (response.getStatus() != 201) {
+					throw new RuntimeException("Failed : HTTP error code : "
+						   + response.getStatus());
+				}
+			} catch (Exception e) {
+						 
+				e.printStackTrace();
+					 
+			} finally {
+				try {
+					loadTicket(ticket.getId());
+				} catch (JAXBException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	}
+	
 
-	protected void safeTicket(CtAntwort answer) {
+	protected void safeAnswer(CtAntwort answer) {
 		
 		ticket.getAntworten().getAntwort().add(answer);
 		
@@ -290,7 +340,7 @@ public class ViewTicketPanel extends JPanel {
 			ClientResponse response = webResource.accept("application/xml")
 					.put(ClientResponse.class, ticket);
 	 
-			if (response.getStatus() != 200) {
+			if (response.getStatus() != 201) {
 				throw new RuntimeException("Failed : HTTP error code : "
 				     + response.getStatus());
 			}
@@ -339,7 +389,10 @@ public class ViewTicketPanel extends JPanel {
 		
 		if(ticket.getInfos().isInBearbeitung()) {
 			takeBtn.setEnabled(false);
+		} else {
+			takeBtn.setEnabled(true);
 		}
+		
 		refreshAnswerPanel();
 	}
 	
@@ -366,7 +419,7 @@ public class ViewTicketPanel extends JPanel {
 				user.getUser().get(0).getId().equals(
 						ticket.getInfos().getSupporterList().getSupporter().get(
 								ticket.getInfos().getSupporterList().getSupporter()
-								.size()).getId())) {
+								.size()-1).getId())) {
 			
 			JPanel answerField = setAnswer();
 			AnswerMainPanel.add(answerField);
@@ -375,23 +428,33 @@ public class ViewTicketPanel extends JPanel {
 			AnswerMainPanel.add(sendBtn);
 		}
 		
+		if(ticket.getAntworten().getAntwort().size() == 0 && !ticket.getInfos().isInBearbeitung()
+				&& !ticket.getInfos().getUser().getId().equals(user.getUser().get(0).getId())) {
+			AnswerMainPanel.setVisible(false);
+		} else {
+			AnswerMainPanel.setVisible(true);
+		}
+		
 		AnswerMainPanel.repaint();
 		
-		sendBtn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				CtAntwort antwort = new CtAntwort();
-				Supporter supporter = new Supporter();
-				supporter.setId(user.getUser().get(0).getId());
-				supporter.setValue(user.getUser().get(0).getVorname()+" "
-						+user.getUser().get(0).getNachname());
-				antwort.setSupporter(supporter);
-				antwort.setDatum(getDate());
-				antwort.setAntwort(answerTArea.getText());
-				safeTicket(antwort);
-			}
-		});
+		if(sendBtn != null) {
+			sendBtn.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					CtAntwort antwort = new CtAntwort();
+					Supporter supporter = new Supporter();
+					supporter.setId(user.getUser().get(0).getId());
+					supporter.setValue(user.getUser().get(0).getVorname()+" "
+							+user.getUser().get(0).getNachname());
+					antwort.setSupporter(supporter);
+					antwort.setDatum(getDate());
+					antwort.setAntwort(answerTArea.getText());
+					safeAnswer(antwort);
+				}
+			});
+		}
+		
 	}
 
 

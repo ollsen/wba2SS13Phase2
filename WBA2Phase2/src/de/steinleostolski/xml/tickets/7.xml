@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Ticket xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="7" xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd">
+    <Infos>
+        <Betreff>vfafds</Betreff>
+        <User id="2">Oliver Steinle</User>
+        <Standort>Cologne</Standort>
+        <SupporterList/>
+        <Datum>2013-06-20T18:01:08.383+02:00</Datum>
+        <Beschreibung>fafcadscdcfew</Beschreibung>
+        <Zustand>niedrig</Zustand>
+        <in_bearbeitung>false</in_bearbeitung>
+        <Tags>
+            <Tag>Hardware</Tag>
+        </Tags>
+    </Infos>
+    <Antworten/>
+</Ticket>
