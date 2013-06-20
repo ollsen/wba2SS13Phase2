@@ -29,6 +29,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.jivesoftware.smack.XMPPException;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -187,11 +189,19 @@ public class EditUserPanel extends JPanel {
 		user.getUser().get(0).setNachname(nachnameField.getText());
 		user.getUser().get(0).setStandort(vornameField.getText());
 		
-		user.getUser().get(0).getKnowHows().getKnowHow().clear();
 		
 		for(int i = 0; i < userItFieldList.getModel().getSize(); i++) {
-			user.getUser().get(0).getKnowHows().getKnowHow()
-			.add(userItFieldList.getModel().getElementAt(i).toString());
+			if(!user.getUser().get(0).getKnowHows().getKnowHow().contains(userItFieldList.getModel().getElementAt(i).toString())) {
+				user.getUser().get(0).getKnowHows().getKnowHow()
+				.add(userItFieldList.getModel().getElementAt(i).toString());
+				
+				try {
+					pubsub.subscribeLeafNode(userItFieldList.getModel().getElementAt(i).toString());
+				} catch (XMPPException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		Client client = Client.create();

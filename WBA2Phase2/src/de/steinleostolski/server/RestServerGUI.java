@@ -17,8 +17,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jivesoftware.smack.XMPPException;
+
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyServerFactory;
+
+import de.steinleostolski.xmpp.PubsubClient;
 
 public class RestServerGUI extends JFrame {
 
@@ -32,6 +36,12 @@ public class RestServerGUI extends JFrame {
 	private JLabel statusLabel;
 	private SelectorThread srv;
 	private InetAddress ip;
+	
+	public static PubsubClient pubsub;
+	
+	private final String username = "restfull";
+	private final String password = "restful";
+	private final String jid = username+"@localhost";
 
 	/**
 	 * @param args
@@ -50,6 +60,7 @@ public class RestServerGUI extends JFrame {
 	
 	public RestServerGUI() {
 		initialize();
+		login();
 	}
 
 	private final void initialize() {
@@ -148,5 +159,14 @@ public class RestServerGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 	}
-	
+	private void login() {
+		pubsub = new PubsubClient();
+		try {
+			pubsub.login(username, password);
+		} catch (XMPPException e) {
+			System.out.println("Fehlgeschlagen");
+		}
+		
+		pubsub.setJID(jid);
+	}
 }

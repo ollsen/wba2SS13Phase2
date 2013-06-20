@@ -8,6 +8,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
+
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smackx.pubsub.PayloadItem;
+import org.jivesoftware.smackx.pubsub.SimplePayload;
+
 import de.steinleostolski.jaxb.Ressource;
 import de.steinleostolski.ticket.CtAntwort;
 import de.steinleostolski.ticket.CtTicket.Antworten;
@@ -17,6 +22,7 @@ import de.steinleostolski.tickets.Ticketlist;
 import de.steinleostolski.tickets.Ticketlist.Teintrag;
 import de.steinleostolski.tickets.Ticketlist.Teintrag.Tags;
 import de.steinleostolski.user.Userdb;
+import de.steinleostolski.xmpp.PubsubClient;
 
 
 
@@ -24,6 +30,11 @@ import de.steinleostolski.user.Userdb;
 public class TicketRessource extends Ressource{
 	
 	private static String schemaLoc;
+	private PubsubClient pubsub;
+	
+	private final String username = "restfull";
+	private final String password = "restful";
+	private final String jid = username+"@localhost";
 
 	@Override
 	@GET
@@ -109,6 +120,26 @@ public class TicketRessource extends Ressource{
 		marshal(Userdb.class, userdb, "user.xml", schemaLoc);
 		
 		String result = "Ticket mit der id: "+ticket.getId()+" hinzugefügt";
+		
+		if(RestServerGUI.pubsub == null) {
+			System.out.println("login");
+			login();
+		}
+		
+		SimplePayload simplePl = new SimplePayload("notification", "pubsub:ticket:notification",
+				"<notification xmlns='pubsub:ticket:notification'>" +
+				"<ticketId>"+ticket.getId()+"</ticketId>"+
+				"<type>new ticket</type>" +
+				"<date>"+ticket.getInfos().getDatum()+"</date>" +
+				"<tag>"+ticket.getInfos().getTags().getTag().get(0)+"</tag>"+
+				"</notification>");
+		
+		try {
+			RestServerGUI.pubsub.sendPayloadItem(ticket.getInfos().getTags().getTag().get(0), simplePl);
+		} catch (XMPPException e) {
+			System.out.println("Fehler");
+			e.printStackTrace();
+		}
 		
 		return Response.status(201).entity(result).build();
 	}
@@ -212,6 +243,16 @@ public class TicketRessource extends Ressource{
 		return Response.status(201).build();
 	}
 	
+	private void login() {
+		pubsub = new PubsubClient();
+		try {
+			pubsub.login(username, password);
+		} catch (XMPPException e) {
+			System.out.println("Fehlgeschlagen");
+		}
+		
+		pubsub.setJID(jid);
+	}
 	
 	
 

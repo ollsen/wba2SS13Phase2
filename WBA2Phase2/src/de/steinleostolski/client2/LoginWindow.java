@@ -110,6 +110,7 @@ public class LoginWindow extends JFrame {
 		}
 		
 		if(pubsub.getConnection().isAuthenticated()) {
+			pubsub.setJID(username.getText()+"@localhost");
 			pubsub.setUsername(username.getText());
 			status.setForeground(Color.GREEN);
 			status.setText("erfolgreich");

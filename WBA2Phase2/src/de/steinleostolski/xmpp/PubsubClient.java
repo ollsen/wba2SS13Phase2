@@ -12,8 +12,10 @@ import org.jivesoftware.smackx.pubsub.AccessModel;
 import org.jivesoftware.smackx.pubsub.ConfigureForm;
 import org.jivesoftware.smackx.pubsub.FormType;
 import org.jivesoftware.smackx.pubsub.LeafNode;
+import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.PublishModel;
+import org.jivesoftware.smackx.pubsub.SimplePayload;
 
 public class PubsubClient {
 	
@@ -31,9 +33,13 @@ public class PubsubClient {
 
     public void login(String userName, String password) throws XMPPException
     {
+    
+    	//XMPPConnection.DEBUG_ENABLED = true;
     ConnectionConfiguration config = new ConnectionConfiguration("localhost",5222, "Work");
     connection = new XMPPConnection(config);
  
+    
+    
     connection.connect();
     connection.login(userName, password);
     }
@@ -56,8 +62,27 @@ public class PubsubClient {
     	mgr.deleteNode(nodeName);
     }
     
+    public void subscribeLeafNode(String nodeName) throws XMPPException {
+    	PubSubManager mgr = new PubSubManager(connection);
+    	LeafNode leaf = mgr.getNode(nodeName);
+    	leaf.subscribe(jid);
+    }
+    
+    public void sendPayloadItem(String nodeName, SimplePayload simplePl) throws XMPPException {
+    	PubSubManager mgr = new PubSubManager(connection);
+    	LeafNode leaf = mgr.getNode(nodeName);
+    	
+    	leaf.publish(new PayloadItem(nodeName + System.currentTimeMillis(), simplePl));
+    }
+    
     public void getSubscriptionId(String nodeName) {
     	
+    }
+    
+    public LeafNode getLeafNode(String nodeName) throws XMPPException {
+    	PubSubManager mgr = new PubSubManager(connection);
+    	LeafNode leaf = mgr.getNode(nodeName);
+    	return leaf;
     }
     
     public void setJID(String jid) {

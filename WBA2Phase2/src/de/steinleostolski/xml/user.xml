@@ -7,7 +7,28 @@
         <Nachname>Mustermann</Nachname>
         <Standort>Max</Standort>
         <status>admin</status>
-        <KnowHows/>
+        <KnowHows>
+            <KnowHow>Hardware</KnowHow>
+        </KnowHows>
         <Tickets/>
+    </user>
+    <user>
+        <id>2</id>
+        <jabber>osteinle</jabber>
+        <Vorname>Oliver</Vorname>
+        <Nachname>Steinle</Nachname>
+        <Standort>Cologne</Standort>
+        <status>User</status>
+        <KnowHows/>
+        <Tickets>
+            <ticketId>1</ticketId>
+            <ticketId>2</ticketId>
+            <ticketId>3</ticketId>
+            <ticketId>4</ticketId>
+            <ticketId>5</ticketId>
+            <ticketId>6</ticketId>
+            <ticketId>7</ticketId>
+            <ticketId>8</ticketId>
+        </Tickets>
     </user>
 </userdb>
