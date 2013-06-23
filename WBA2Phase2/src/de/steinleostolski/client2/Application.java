@@ -4,25 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,7 +24,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.Affiliation;
 import org.jivesoftware.smackx.pubsub.Item;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
@@ -52,10 +43,7 @@ import de.steinleostolski.client2.panels.ViewTicketPanel;
 import de.steinleostolski.client2.panels.ViewTicketlistPanel;
 import de.steinleostolski.client2.panels.ViewUserPanel;
 import de.steinleostolski.payload.Notification;
-import de.steinleostolski.tickets.Ticketlist;
-import de.steinleostolski.tickets.Ticketlist.Teintrag;
 import de.steinleostolski.user.Userdb;
-import de.steinleostolski.xmpp.ItemEventCoordinator;
 import de.steinleostolski.xmpp.PubsubClient;
 
 public class Application extends JFrame {
