@@ -10,12 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -215,6 +221,17 @@ public class Application extends JFrame {
 						@Override
 						public void handlePublishedItems(
 								ItemPublishEvent items) {
+							
+//							try {
+//								Clip clip = AudioSystem.getClip();
+//								AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(
+//										"src/de/steinleostolski/client2/sound/alarma.wav"));
+//								clip.open(inputStream);
+//						        clip.start(); 
+//							} catch (Exception e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} 
 							Collection<? extends Item> itemss = items.getItems();
 					        for (Item item : itemss) {
 					                  PayloadItem pi = (PayloadItem) item;

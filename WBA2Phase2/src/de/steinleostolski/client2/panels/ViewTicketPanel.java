@@ -1,7 +1,6 @@
 package de.steinleostolski.client2.panels;
 
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,20 +13,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.Popup;
-import javax.swing.PopupFactory;
 import javax.swing.ScrollPaneConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -41,11 +35,10 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
-import de.steinleostolski.settings.Settings;
+import de.steinleostolski.client2.LoginWindow;
 import de.steinleostolski.ticket.CtAntwort;
 import de.steinleostolski.ticket.CtAntwort.Supporter;
 import de.steinleostolski.ticket.Ticket;
-import de.steinleostolski.tickets.Ticketlist;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.PubsubClient;
 
@@ -57,8 +50,7 @@ public class ViewTicketPanel extends JPanel {
 	
 	private JPanel mainPanel;
 	private JPanel AnswerMainPanel;
-	private JTextField vornameField;
-	private JTextField nachnameField;
+	private Iterator<String> iterator;
 	
 	private JTextArea datumField;
 	private JTextArea betreffField;
@@ -67,11 +59,12 @@ public class ViewTicketPanel extends JPanel {
 	private JTextArea priorityField;
 	private JTextArea inProgressField;
 	private JTextArea descriptionTArea;
-	private JList userItFieldList;
-	private DefaultListModel userListData;
+	private JTextArea itFieldField;
 	private JTextArea answerTArea;
 	private JButton sendBtn;
 	private JButton takeBtn;
+	private JButton releaseBtn;
+	private JButton closeBtn;
 	
 
 	/**
@@ -101,10 +94,12 @@ public class ViewTicketPanel extends JPanel {
 		
 		JButton btnMainMenu = new JButton("Main Menu");
 		takeBtn = new JButton("Ticket übernehmen");
+		releaseBtn = new JButton("Ticket freigeben");
+		closeBtn = new JButton("Ticket Schließen");
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 4;
 		gbc.anchor = GridBagConstraints.NORTH;
 		mainPanel.add(infoPanel, gbc);
 		gbc.gridy++;
@@ -113,10 +108,17 @@ public class ViewTicketPanel extends JPanel {
 		mainPanel.add(btnMainMenu, gbc);
 		gbc.gridx++;
 		mainPanel.add(takeBtn, gbc);
-		gbc.gridx--;
+		mainPanel.add(releaseBtn, gbc);
+		gbc.gridx++;
+		mainPanel.add(closeBtn, gbc);
+		gbc.gridx = 0;
 		gbc.gridy++;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 4;
 		gbc.anchor = GridBagConstraints.NORTH;
+		
+		takeBtn.setVisible(false);
+		releaseBtn.setVisible(false);
+		closeBtn.setVisible(false);
 		mainPanel.add(answerPanel, gbc);
 		
 		btnMainMenu.addActionListener(new ActionListener() {
@@ -135,8 +137,25 @@ public class ViewTicketPanel extends JPanel {
 			}
 		});
 		
+		releaseBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				releaseTicket();
+			}
+		});
+		
+		closeBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeTicket();
+			}
+		});
 	}
 	
+
+
 	private JPanel loadInfoPanel() {
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Info"));
@@ -147,7 +166,8 @@ public class ViewTicketPanel extends JPanel {
 		JLabel betreffLabel = new JLabel("Betreff:");
 		JLabel creatorLabel = new JLabel("Ersteller:");
 		JLabel standortLabel = new JLabel("Standort:");
-		JLabel priorityLabel = new JLabel("Zustand");
+		JLabel itFieldLabel = new JLabel("Fachgebiet:");
+		JLabel priorityLabel = new JLabel("Zustand:");
 		JLabel inProgressLabel = new JLabel("Es bearbeitet für Sie:");
 		JLabel descriptionLabel =  new JLabel("Beschreibung:");
 		
@@ -163,6 +183,9 @@ public class ViewTicketPanel extends JPanel {
 		standortField = new JTextArea();
 		standortField.setBackground(panel.getBackground());
 		standortField.setEditable(false);
+		itFieldField = new JTextArea();
+		itFieldField.setBackground(panel.getBackground());
+		itFieldField.setEditable(false);
 		priorityField = new JTextArea();
 		priorityField.setBackground(panel.getBackground());
 		priorityField.setEditable(false);
@@ -173,7 +196,7 @@ public class ViewTicketPanel extends JPanel {
 		descriptionTArea.setBackground(panel.getBackground());
 		descriptionTArea.setEditable(false);
 		
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0; gbc.gridy = 0;
 		gbc.insets = new Insets(2, 2, 2, 2);
@@ -193,6 +216,10 @@ public class ViewTicketPanel extends JPanel {
 		panel.add(standortLabel, gbc);
 		gbc.gridx++;
 		panel.add(standortField, gbc);
+		gbc.gridx--; gbc.gridy++;
+		panel.add(itFieldLabel, gbc);
+		gbc.gridx++;
+		panel.add(itFieldField, gbc);
 		gbc.gridx--; gbc.gridy++;
 		panel.add(priorityLabel, gbc);
 		gbc.gridx++;
@@ -303,7 +330,7 @@ public class ViewTicketPanel extends JPanel {
 		
 		try {
 			WebResource webResource = client
-					   .resource("http://localhost:4434/ticket/"+ticket.getId().toString()+"/editSupporter");
+					   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/editSupporter");
 					
 				ClientResponse response = webResource.accept("application/xml")
 							.put(ClientResponse.class, ticket);
@@ -326,6 +353,60 @@ public class ViewTicketPanel extends JPanel {
 			}
 	}
 	
+	protected void releaseTicket() {
+		Client client = Client.create();
+			
+		try {
+			WebResource webResource = client
+						.resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/release");
+						
+			ClientResponse response = webResource.accept("application/xml")
+								.put(ClientResponse.class, ticket);
+				 
+			if (response.getStatus() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				loadTicket(ticket.getId());
+			} catch (JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	protected void closeTicket() {
+		Client client = Client.create();
+			
+		try {
+			WebResource webResource = client
+					.resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/close");
+						
+			ClientResponse response = webResource.accept("application/xml")
+					.put(ClientResponse.class);
+				 
+			if (response.getStatus() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				loadTicket(ticket.getId());
+			} catch (JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	
+	
 
 	protected void safeAnswer(CtAntwort answer) {
 		
@@ -335,7 +416,7 @@ public class ViewTicketPanel extends JPanel {
 		
 		try { 
 			WebResource webResource = client
-			   .resource("http://localhost:4434/ticket/"+ticket.getId().toString()+"/answer/");
+			   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/answer/");
 			
 			ClientResponse response = webResource.accept("application/xml")
 					.put(ClientResponse.class, ticket);
@@ -363,7 +444,7 @@ public class ViewTicketPanel extends JPanel {
 	public void loadTicket(BigInteger ticketId) throws JAXBException {
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/ticket/"+ticketId.toString());
+				   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticketId.toString());
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Ticket.class);
@@ -375,6 +456,13 @@ public class ViewTicketPanel extends JPanel {
 		betreffField.setText(ticket.getInfos().getBetreff());
 		creatorField.setText(ticket.getInfos().getUser().getValue());
 		standortField.setText(ticket.getInfos().getStandort());
+		iterator = ticket.getInfos().getTags().getTag().iterator();
+		itFieldField.setText("");
+		while(iterator.hasNext()) {
+			itFieldField.append(iterator.next());
+			if(iterator.hasNext())
+				itFieldField.append("\n");
+		}
 		priorityField.setText(ticket.getInfos().getZustand());
 		if(ticket.getInfos().getSupporterList().getSupporter().size() == 0) {
 			inProgressField.setText("");
@@ -387,10 +475,25 @@ public class ViewTicketPanel extends JPanel {
 		descriptionTArea.setWrapStyleWord(true);
 		descriptionTArea.setText(ticket.getInfos().getBeschreibung());
 		
-		if(ticket.getInfos().isInBearbeitung()) {
-			takeBtn.setEnabled(false);
-		} else {
-			takeBtn.setEnabled(true);
+		if(!user.getUser().get(0).getStatus().contains("User")) {
+			if(!ticket.getInfos().isInBearbeitung() &&
+					ticket.getInfos().getSupporterList().getSupporter().size() == 0) {
+				takeBtn.setVisible(true);
+				releaseBtn.setVisible(false);
+				closeBtn.setVisible(false);
+			} else if(ticket.getInfos().isInBearbeitung() &&
+					ticket.getInfos().getSupporterList().getSupporter().
+					get(ticket.getInfos().getSupporterList().getSupporter().
+							size()-1).getId().equals(user.getUser().get(0).getId())) {
+				takeBtn.setVisible(false);
+				releaseBtn.setVisible(true);
+				closeBtn.setVisible(true);
+			} else if (ticket.getInfos().getUser().getId().equals(user.getUser().get(0)
+					.getId())) {
+				takeBtn.setVisible(false);
+				releaseBtn.setVisible(false);
+				closeBtn.setVisible(false);
+			}
 		}
 		
 		refreshAnswerPanel();

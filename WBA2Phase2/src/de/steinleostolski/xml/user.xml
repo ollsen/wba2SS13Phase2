@@ -11,9 +11,13 @@
             <KnowHow>Hardware</KnowHow>
         </KnowHows>
         <Tickets>
+            <ticketId>1</ticketId>
+            <ticketId>2</ticketId>
+            <ticketId>3</ticketId>
+            <ticketId>6</ticketId>
+            <ticketId>7</ticketId>
+            <ticketId>8</ticketId>
             <ticketId>9</ticketId>
-            <ticketId>13</ticketId>
-            <ticketId>14</ticketId>
         </Tickets>
     </user>
     <user>
@@ -25,18 +29,8 @@
         <status>User</status>
         <KnowHows/>
         <Tickets>
-            <ticketId>1</ticketId>
-            <ticketId>2</ticketId>
-            <ticketId>3</ticketId>
             <ticketId>4</ticketId>
             <ticketId>5</ticketId>
-            <ticketId>6</ticketId>
-            <ticketId>7</ticketId>
-            <ticketId>8</ticketId>
-            <ticketId>10</ticketId>
-            <ticketId>11</ticketId>
-            <ticketId>12</ticketId>
-            <ticketId>15</ticketId>
         </Tickets>
     </user>
 </userdb>

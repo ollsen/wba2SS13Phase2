@@ -32,6 +32,7 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
+import de.steinleostolski.client2.LoginWindow;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.PubsubClient;
 
@@ -125,7 +126,7 @@ public class ViewUserPanel extends JPanel {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client
-					   .resource("http://localhost:4434/user/"+userId+"/delete");
+					   .resource("http://"+LoginWindow.adress+":4434/user/"+userId+"/delete");
 			
 			ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
 					.delete(ClientResponse.class);
@@ -292,7 +293,7 @@ public class ViewUserPanel extends JPanel {
 		
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/user/");
+				   .resource("http://"+LoginWindow.adress+":4434/user/");
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Userdb.class);

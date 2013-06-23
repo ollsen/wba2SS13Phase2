@@ -20,14 +20,18 @@ import javax.xml.bind.JAXBException;
 
 import org.jivesoftware.smack.XMPPException;
 
+import de.steinleostolski.server.RestServerGUI;
 import de.steinleostolski.xmpp.PubsubClient;
 
 public class LoginWindow extends JFrame {
 	
 	private JTextField username;
+	private JTextField adressField;
 	private JPasswordField password;
 	private JLabel status;
 	private PubsubClient pubsub;
+	
+	public static String adress;
 
 	/**
 	 * 
@@ -43,10 +47,12 @@ public class LoginWindow extends JFrame {
 	private final void initUI() {
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 15, 30, 15));
-		panel.setLayout(new GridLayout(3, 2, 10, 10));
+		panel.setLayout(new GridLayout(4, 2, 10, 10));
 		
+		panel.add(new JLabel("Adresse"));
+		adressField = new JTextField("localhost");
+		panel.add(adressField);
 		panel.add(new JLabel("Benutzername"));
-		
 		username = new JTextField();
 		panel.add(username);
 		panel.add(new JLabel("Kennwort"));
@@ -62,7 +68,7 @@ public class LoginWindow extends JFrame {
 		
 		setTitle("Login");
 		setResizable(false);
-        setSize(350, 200);
+        setSize(350, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
@@ -101,7 +107,7 @@ public class LoginWindow extends JFrame {
         
 	}
 	public void login() {
-		pubsub = new PubsubClient();
+		pubsub = new PubsubClient(adressField.getText());
 		try {
 			pubsub.login(username.getText(), password.getText());
 		} catch (XMPPException e) {
@@ -110,6 +116,7 @@ public class LoginWindow extends JFrame {
 		}
 		
 		if(pubsub.getConnection().isAuthenticated()) {
+			adress = adressField.getText();
 			pubsub.setJID(username.getText()+"@localhost");
 			pubsub.setUsername(username.getText());
 			status.setForeground(Color.GREEN);

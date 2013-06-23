@@ -12,13 +12,11 @@ import java.io.StringReader;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,7 +33,9 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
+import de.steinleostolski.client2.LoginWindow;
 import de.steinleostolski.tickets.Ticketlist;
+import de.steinleostolski.tickets.Ticketlist.Teintrag;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.PubsubClient;
 
@@ -46,10 +46,11 @@ public class ViewTicketlistPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 6147709322502976652L;
 	private Application app;
+	@SuppressWarnings("unused")
 	private PubsubClient pubsub;
 	private Userdb user;
 	private Ticketlist ticketlist;
-	private DefaultTableModel tableModel ;
+	private DefaultTableModel tableModel;
 	private Vector<String> columnNames;
 	private JComboBox filterComboBox;
 	private Vector<Vector<String>> data;
@@ -245,7 +246,7 @@ public class ViewTicketlistPanel extends JPanel {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client
-					   .resource("http://localhost:4434/ticket/"+ticketId+"/delete");
+					   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticketId+"/delete");
 			
 			ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
 					.delete(ClientResponse.class);
@@ -273,73 +274,75 @@ public class ViewTicketlistPanel extends JPanel {
 			e.printStackTrace();
 		}
 		if(filter == "Offene Tickets") {
-			for(int i = 0; i < ticketlist.getTeintrag().size(); i++) {
-				if(!ticketlist.getTeintrag().get(i).isBearbeitungszustand() &&
-						!ticketlist.getTeintrag().get(i).getZustand().equals("geschlossen")) {
-					Vector<String> vec = new Vector<String>();
-					vec.addElement(ticketlist.getTeintrag().get(i).getTicketId().toString());
-					vec.addElement(gregorianToDate(ticketlist.getTeintrag().get(i).getDatum()));
-					vec.addElement(ticketlist.getTeintrag().get(i).getBetreff());
-					vec.addElement(ticketlist.getTeintrag().get(i).getZustand());
-					filterData.addElement(vec);
+			for(Teintrag eintrag : ticketlist.getTeintrag()) {
+				for(String tag : eintrag.getTags().getTag()) {
+					if(!eintrag.isBearbeitungszustand() && !eintrag.getZustand()
+							.equals("geschlossen") && ( 
+							user.getUser().get(0).getKnowHows().getKnowHow().contains(tag) ||
+							eintrag.getZustand().equals("kritisch"))) {
+						Vector<String> vec = new Vector<String>();
+						vec.addElement(eintrag.getTicketId().toString());
+						vec.addElement(gregorianToDate(eintrag.getDatum()));
+						vec.addElement(eintrag.getBetreff());
+						vec.addElement(eintrag.getZustand());
+						filterData.addElement(vec);
+						break;
+							}
 				}
 			}
 			return filterData;
 		} else if(filter == "Erstellte Tickets") {
-			for(int i = 0; i < ticketlist.getTeintrag().size(); i++) {
-				if(ticketlist.getTeintrag().get(i).getErstellerId()
-						.equals(user.getUser().get(0).getId())) {
+			for(Teintrag eintrag : ticketlist.getTeintrag()) {
+				if(eintrag.getErstellerId().equals(user.getUser().get(0).getId())) {
 					Vector<String> vec = new Vector<String>();
-					vec.addElement(ticketlist.getTeintrag().get(i).getTicketId().toString());
-					vec.addElement(gregorianToDate(ticketlist.getTeintrag().get(i).getDatum()));
-					vec.addElement(ticketlist.getTeintrag().get(i).getBetreff());
-					vec.addElement(ticketlist.getTeintrag().get(i).getZustand());
+					vec.addElement(eintrag.getTicketId().toString());
+					vec.addElement(gregorianToDate(eintrag.getDatum()));
+					vec.addElement(eintrag.getBetreff());
+					vec.addElement(eintrag.getZustand());
 					filterData.addElement(vec);
 				}
 			}
 		} else if(filter == "Tickets in Bearbeitung") {
-			for(int i = 0; i < ticketlist.getTeintrag().size(); i++) {
-				if(ticketlist.getTeintrag().get(i).getErstellerId()
-						.equals(user.getUser().get(0).getId()) &&
-						ticketlist.getTeintrag().get(i).isBearbeitungszustand()) {
+			for(Teintrag eintrag : ticketlist.getTeintrag()) {
+				if(eintrag.getErstellerId().equals(user.getUser().get(0).getId()) &&
+						eintrag.isBearbeitungszustand()) {
 					Vector<String> vec = new Vector<String>();
-					vec.addElement(ticketlist.getTeintrag().get(i).getTicketId().toString());
-					vec.addElement(gregorianToDate(ticketlist.getTeintrag().get(i).getDatum()));
-					vec.addElement(ticketlist.getTeintrag().get(i).getBetreff());
-					vec.addElement(ticketlist.getTeintrag().get(i).getZustand());
+					vec.addElement(eintrag.getTicketId().toString());
+					vec.addElement(gregorianToDate(eintrag.getDatum()));
+					vec.addElement(eintrag.getBetreff());
+					vec.addElement(eintrag.getZustand());
 					filterData.addElement(vec);
 				}
 			}
 		} else if(filter == "Geschlossene Tickets") {
-			for(int i = 0; i < ticketlist.getTeintrag().size(); i++) {
-				if(ticketlist.getTeintrag().get(i).getErstellerId()
-						.equals(user.getUser().get(0).getId()) &&
-						ticketlist.getTeintrag().get(i).getZustand().equals("geschlossen")) {
+			for(Teintrag eintrag : ticketlist.getTeintrag()) {
+				if(eintrag.getErstellerId().equals(user.getUser().get(0).getId()) &&
+						eintrag.getZustand().equals("geschlossen")) {
 					Vector<String> vec = new Vector<String>();
-					vec.addElement(ticketlist.getTeintrag().get(i).getTicketId().toString());
-					vec.addElement(gregorianToDate(ticketlist.getTeintrag().get(i).getDatum()));
-					vec.addElement(ticketlist.getTeintrag().get(i).getBetreff());
-					vec.addElement(ticketlist.getTeintrag().get(i).getZustand());
+					vec.addElement(eintrag.getTicketId().toString());
+					vec.addElement(gregorianToDate(eintrag.getDatum()));
+					vec.addElement(eintrag.getBetreff());
+					vec.addElement(eintrag.getZustand());
 					filterData.addElement(vec);
 				}
 			}
 		} else if(filter == "Alle Tickets") {
-			for(int i = 0; i < ticketlist.getTeintrag().size(); i++) {
+			for(Teintrag eintrag : ticketlist.getTeintrag()) {
 				Vector<String> vec = new Vector<String>();
-				vec.addElement(ticketlist.getTeintrag().get(i).getTicketId().toString());
-				vec.addElement(gregorianToDate(ticketlist.getTeintrag().get(i).getDatum()));
-				vec.addElement(ticketlist.getTeintrag().get(i).getBetreff());
-				vec.addElement(ticketlist.getTeintrag().get(i).getZustand());
+				vec.addElement(eintrag.getTicketId().toString());
+				vec.addElement(gregorianToDate(eintrag.getDatum()));
+				vec.addElement(eintrag.getBetreff());
+				vec.addElement(eintrag.getZustand());
 				filterData.addElement(vec);
 			}
 		} else if(filter == "Alle Geschlossene Tickets") {
-			for(int i = 0; i < ticketlist.getTeintrag().size(); i++) {
-				if(ticketlist.getTeintrag().get(i).getZustand().equals("geschlossen")) {
+			for(Teintrag eintrag : ticketlist.getTeintrag()) {
+				if(eintrag.getZustand().equals("geschlossen")) {
 					Vector<String> vec = new Vector<String>();
-					vec.addElement(ticketlist.getTeintrag().get(i).getTicketId().toString());
-					vec.addElement(gregorianToDate(ticketlist.getTeintrag().get(i).getDatum()));
-					vec.addElement(ticketlist.getTeintrag().get(i).getBetreff());
-					vec.addElement(ticketlist.getTeintrag().get(i).getZustand());
+					vec.addElement(eintrag.getTicketId().toString());
+					vec.addElement(gregorianToDate(eintrag.getDatum()));
+					vec.addElement(eintrag.getBetreff());
+					vec.addElement(eintrag.getZustand());
 					filterData.addElement(vec);
 				}
 			}
@@ -351,7 +354,7 @@ public class ViewTicketlistPanel extends JPanel {
 	private void loadTicketlist() throws JAXBException {
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/ticket/");
+				   .resource("http://"+LoginWindow.adress+":4434/ticket/");
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Ticketlist.class);
@@ -396,6 +399,12 @@ public class ViewTicketlistPanel extends JPanel {
 		
 		for(int i = 0; i < listSize; i++) {
 			if(ticketlist.getTeintrag().get(i).getZustand().equals("niedrig")) {
+				sortList.getTeintrag().add(ticketlist.getTeintrag().get(i));
+			}
+		}
+		
+		for(int i = 0; i < listSize; i++) {
+			if(ticketlist.getTeintrag().get(i).getZustand().equals("geschlossen")) {
 				sortList.getTeintrag().add(ticketlist.getTeintrag().get(i));
 			}
 		}

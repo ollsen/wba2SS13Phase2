@@ -22,6 +22,8 @@ public class PubsubClient {
 	private XMPPConnection connection;
 	 
     private PubSubManager pubsubMgr;
+    
+    private String adress;
  
     private String jid;
     
@@ -31,11 +33,15 @@ public class PubsubClient {
     
     private Map<String, DefaultListModel> nodeMessages = new TreeMap<String, DefaultListModel>();
 
+    
+    public PubsubClient(String adress) {
+    	this.adress = adress;
+    }
     public void login(String userName, String password) throws XMPPException
     {
     
     	//XMPPConnection.DEBUG_ENABLED = true;
-    ConnectionConfiguration config = new ConnectionConfiguration("localhost",5222, "Work");
+    ConnectionConfiguration config = new ConnectionConfiguration(adress,5222, "Work");
     connection = new XMPPConnection(config);
  
     
@@ -66,6 +72,12 @@ public class PubsubClient {
     	PubSubManager mgr = new PubSubManager(connection);
     	LeafNode leaf = mgr.getNode(nodeName);
     	leaf.subscribe(jid);
+    }
+    
+    public void unsubscribeLeafNode(String nodeName) throws XMPPException {
+    	PubSubManager mgr = new PubSubManager(connection);
+    	LeafNode leaf = mgr.getNode(nodeName);
+    	leaf.unsubscribe(jid);
     }
     
     public void sendPayloadItem(String nodeName, SimplePayload simplePl) throws XMPPException {

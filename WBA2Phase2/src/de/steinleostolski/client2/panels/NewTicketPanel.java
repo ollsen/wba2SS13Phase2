@@ -44,6 +44,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
+import de.steinleostolski.client2.LoginWindow;
 import de.steinleostolski.settings.Settings;
 import de.steinleostolski.ticket.CtInfo;
 import de.steinleostolski.ticket.CtInfo.SupporterList;
@@ -203,7 +204,7 @@ public class NewTicketPanel extends JPanel {
 				Client client = Client.create();
 				try { 
 					WebResource webResource = client
-					   .resource("http://localhost:4434/ticket/add/");
+					   .resource("http://"+LoginWindow.adress+":4434/ticket/add/");
 					
 					ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
 							.post(ClientResponse.class, ticket);
@@ -255,7 +256,7 @@ public class NewTicketPanel extends JPanel {
 		Object[] itFieldList;
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/settings/");
+				   .resource("http://"+LoginWindow.adress+":4434/settings/");
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Settings.class);

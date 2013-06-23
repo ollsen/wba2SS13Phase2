@@ -1,35 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Ticket xmlns="http://example.org/ticket" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4" xsi:schemaLocation="http://example.org/ticket ../../schema/TicketSchema.xsd">
     <Infos>
-        <Betreff>hkjhljh</Betreff>
+        <Betreff>fdsfdsfdsaf</Betreff>
         <User id="2">Oliver Steinle</User>
         <Standort>Cologne</Standort>
         <SupporterList>
-            <Supporter id="1">Max Mustermann</Supporter>
         </SupporterList>
-        <Datum>2013-06-17T22:38:42.205+02:00</Datum>
-        <Beschreibung>gjkbkjhjk</Beschreibung>
-        <Zustand>hoch</Zustand>
-        <in_bearbeitung>true</in_bearbeitung>
+        <Datum>2013-06-22T09:23:58.826+02:00</Datum>
+        <Beschreibung>gdfadsfdsfdsfasfsd</Beschreibung>
+        <Zustand>niedrig</Zustand>
+        <in_bearbeitung>false</in_bearbeitung>
         <Tags>
-            <Tag>Hardware</Tag>
+            <Tag>Software</Tag>
         </Tags>
     </Infos>
-    <Antworten>
-        <Antwort>
-            <Supporter id="2">Oliver Steinle</Supporter>
-            <Datum>2013-06-20T21:10:01.578+02:00</Datum>
-            <Antwort>ewjlfldsafjldsafdsf</Antwort>
-        </Antwort>
-        <Antwort>
-            <Supporter id="2">Oliver Steinle</Supporter>
-            <Datum>2013-06-20T21:10:01.578+02:00</Datum>
-            <Antwort>ewjlfldsafjldsafdsf</Antwort>
-        </Antwort>
-        <Antwort>
-            <Supporter id="2">Oliver Steinle</Supporter>
-            <Datum>2013-06-20T21:10:01.578+02:00</Datum>
-            <Antwort>ewjlfldsafjldsafdsf</Antwort>
-        </Antwort>
-    </Antworten>
+    <Antworten/>
 </Ticket>

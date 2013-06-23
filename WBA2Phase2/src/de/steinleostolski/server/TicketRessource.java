@@ -14,6 +14,7 @@ import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
 
 import de.steinleostolski.jaxb.Ressource;
+import de.steinleostolski.settings.Settings;
 import de.steinleostolski.ticket.CtAntwort;
 import de.steinleostolski.ticket.CtInfo.SupporterList.Supporter;
 import de.steinleostolski.ticket.CtTicket.Antworten;
@@ -203,6 +204,66 @@ public class TicketRessource extends Ressource{
 		
 		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
 		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
+		
+		Ticketlist ticketlist = get();
+		for(Teintrag eintrag : ticketlist.getTeintrag()) {
+			if(eintrag.getTicketId().equals(id)) {
+				eintrag.setBearbeitungszustand(true);
+				break;
+			}
+		}
+		
+		schemaLoc = "http://example.org/ticket ../schema/TListeSchema.xsd";
+		marshal(Ticketlist.class, ticketlist, "ticketliste.xml", schemaLoc);
+		
+		return Response.status(201).build();
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}/release")
+	public Response releaseTicket(@PathParam("id") BigInteger id) throws JAXBException, IOException {
+		Ticket ticket = getTicket(id);
+		ticket.getInfos().setInBearbeitung(false);
+		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
+		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
+		
+		Ticketlist ticketlist = get();
+		for(Teintrag eintrag : ticketlist.getTeintrag()) {
+			if(eintrag.getTicketId().equals(id)) {
+				eintrag.setBearbeitungszustand(false);
+				break;
+			}
+		}
+		
+		schemaLoc = "http://example.org/ticket ../schema/TListeSchema.xsd";
+		marshal(Ticketlist.class, ticketlist, "ticketliste.xml", schemaLoc);
+		
+		return Response.status(201).build();
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	@Path("{id}/close")
+	public Response closeTicket(@PathParam("id") BigInteger id) throws JAXBException, IOException {
+		Ticket ticket = getTicket(id);
+		ticket.getInfos().setInBearbeitung(false);
+		ticket.getInfos().setZustand("geschlossen");
+		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
+		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
+		
+		Ticketlist ticketlist = get();
+		for(Teintrag eintrag : ticketlist.getTeintrag()) {
+			if(eintrag.getTicketId().equals(id)) {
+				eintrag.setBearbeitungszustand(false);
+				eintrag.setZustand("geschlossen");
+				break;
+			}
+		}
+		
+		schemaLoc = "http://example.org/ticket ../schema/TListeSchema.xsd";
+		marshal(Ticketlist.class, ticketlist, "ticketliste.xml", schemaLoc);
+		
 		return Response.status(201).build();
 	}
 	
@@ -216,6 +277,8 @@ public class TicketRessource extends Ressource{
 		
 		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
 		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);
+		
+		
 		return Response.status(201).build();
 	}
 	
@@ -233,8 +296,6 @@ public class TicketRessource extends Ressource{
 		
 		Ticketlist tList = get();
 		
-		System.out.println(ticket.getInfos().getZustand());
-		
 		for(int i = 0; i < tList.getTeintrag().size(); i++) {
 			if(tList.getTeintrag().get(i).getTicketId().equals(id))
 				tList.getTeintrag().get(i).setZustand(zustand);
@@ -243,11 +304,31 @@ public class TicketRessource extends Ressource{
 		schemaLoc = "http://example.org/ticket ../schema/TListeSchema.xsd";
 		marshal(Ticketlist.class, tList, "ticketliste.xml", schemaLoc);
 		
+		SettingResource sres = new SettingResource();
+		Settings settings = sres.get();
+		
+		SimplePayload simplePl = new SimplePayload("notification", "pubsub:ticket:notification",
+				"<notification xmlns='pubsub:ticket:notification'>" +
+				"<ticketId>"+ticket.getId()+"</ticketId>"+
+				"<type>status geändert</type>" +
+				"<date>"+ticket.getInfos().getDatum()+"</date>" +
+				"<tag>"+ticket.getInfos().getTags().getTag().get(0)+"</tag>"+
+				"</notification>");
+		
+		for(int i = 0; i < settings.getITBereich().getFachbereich().size(); i++) {
+			try {
+				pubsub.sendPayloadItem(settings.getITBereich().getFachbereich().get(i), simplePl);
+			} catch (XMPPException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		return Response.status(201).build();
 	}
 	
 	private void login() {
-		pubsub = new PubsubClient();
+		pubsub = new PubsubClient(RestServerGUI.adress);
 		try {
 			pubsub.login(username, password);
 		} catch (XMPPException e) {

@@ -111,7 +111,7 @@ public class SettingResource extends Ressource {
 	}
 	
 	private void login() {
-		pubsub = new PubsubClient();
+		pubsub = new PubsubClient(RestServerGUI.adress);
 		try {
 			pubsub.login(username, password);
 		} catch (XMPPException e) {

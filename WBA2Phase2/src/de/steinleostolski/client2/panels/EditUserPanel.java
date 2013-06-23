@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.StringReader;
-import java.util.Vector;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,6 +36,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
+import de.steinleostolski.client2.LoginWindow;
 import de.steinleostolski.settings.Settings;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.PubsubClient;
@@ -189,26 +190,57 @@ public class EditUserPanel extends JPanel {
 		user.getUser().get(0).setNachname(nachnameField.getText());
 		user.getUser().get(0).setStandort(vornameField.getText());
 		
-		
+		List<String> utfl = new ArrayList<String>();
 		for(int i = 0; i < userItFieldList.getModel().getSize(); i++) {
-			if(!user.getUser().get(0).getKnowHows().getKnowHow().contains(userItFieldList.getModel().getElementAt(i).toString())) {
+			utfl.add(userItFieldList.getModel().getElementAt(i).toString());
+		}
+		
+		for(String list : utfl) {
+			if(!user.getUser().get(0).getKnowHows().getKnowHow().contains(list)) {
 				user.getUser().get(0).getKnowHows().getKnowHow()
-				.add(userItFieldList.getModel().getElementAt(i).toString());
-				
+				.add(list);
 				try {
-					pubsub.subscribeLeafNode(userItFieldList.getModel().getElementAt(i).toString());
+					pubsub.subscribeLeafNode(list);
 				} catch (XMPPException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				break;
 			}
 		}
+		
+		for(String knowhow : user.getUser().get(0).getKnowHows().getKnowHow()) {
+			if(!utfl.contains(knowhow)) {
+				user.getUser().get(0).getKnowHows().getKnowHow().remove(knowhow);
+				try {
+					pubsub.unsubscribeLeafNode(knowhow);
+				} catch (XMPPException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
+		
+//		for(int i = 0; i < userItFieldList.getModel().getSize(); i++) {
+//			if(!user.getUser().get(0).getKnowHows().getKnowHow().contains(userItFieldList.getModel().getElementAt(i).toString())) {
+//				user.getUser().get(0).getKnowHows().getKnowHow()
+//				.add(userItFieldList.getModel().getElementAt(i).toString());
+//				
+//				try {
+//					pubsub.subscribeLeafNode(userItFieldList.getModel().getElementAt(i).toString());
+//				} catch (XMPPException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
 		
 		Client client = Client.create();
 		
 		try { 
 			WebResource webResource = client
-			   .resource("http://localhost:4434/user/"+user.getUser().get(0).getId().toString()+"/edit/");
+			   .resource("http://"+LoginWindow.adress+":4434/user/"+user.getUser().get(0).getId().toString()+"/edit/");
 			
 			ClientResponse response = webResource.accept("application/xml")
 					.put(ClientResponse.class, user);
@@ -262,7 +294,7 @@ public class EditUserPanel extends JPanel {
 		DefaultListModel itFieldData = new DefaultListModel();
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/settings/");
+				   .resource("http://"+LoginWindow.adress+":4434/settings/");
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Settings.class);

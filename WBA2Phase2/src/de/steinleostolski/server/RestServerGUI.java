@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
+import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,11 +38,15 @@ public class RestServerGUI extends JFrame {
 	private SelectorThread srv;
 	private InetAddress ip;
 	
+	public static String adress;
+	
 	public static PubsubClient pubsub;
 	
 	private final String username = "restfull";
 	private final String password = "restful";
 	private final String jid = username+"@localhost";
+	
+	
 
 	/**
 	 * @param args
@@ -56,11 +61,12 @@ public class RestServerGUI extends JFrame {
 			}
 			
 		});
+		Timer timer = new Timer();
+		timer.schedule(new Task(), 1000, 60000);
 	}
 	
 	public RestServerGUI() {
 		initialize();
-		login();
 	}
 
 	private final void initialize() {
@@ -112,6 +118,7 @@ public class RestServerGUI extends JFrame {
 				try {
 					ip = InetAddress.getLocalHost();
 					String url = "http://"+ip.getHostAddress()+":"+String.valueOf(port);
+					adress = ip.getHostAddress();
 					srv = GrizzlyServerFactory.create( url );
 					if(srv.isRunning()) {
 						startButton.setEnabled(false);
@@ -119,7 +126,7 @@ public class RestServerGUI extends JFrame {
 						statusLabel.setText("online");
 						statusLabel.setForeground(Color.green);
 						restfulLabel.setText(url);
-						
+						login();
 					}
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
@@ -160,7 +167,7 @@ public class RestServerGUI extends JFrame {
         setLocationRelativeTo(null);
 	}
 	private void login() {
-		pubsub = new PubsubClient();
+		pubsub = new PubsubClient(adress);
 		try {
 			pubsub.login(username, password);
 		} catch (XMPPException e) {

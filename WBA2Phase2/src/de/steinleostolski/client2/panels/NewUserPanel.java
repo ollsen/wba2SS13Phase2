@@ -27,6 +27,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
+import de.steinleostolski.client2.LoginWindow;
 import de.steinleostolski.user.CtProfile;
 import de.steinleostolski.user.CtProfile.KnowHows;
 import de.steinleostolski.user.Cttickets;
@@ -168,7 +169,7 @@ public class NewUserPanel extends JPanel {
 				Client client = Client.create();
 				try { 
 					WebResource webResource = client
-					   .resource("http://localhost:4434/user/add/");
+					   .resource("http://"+LoginWindow.adress+":4434/user/add/");
 					
 					ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
 							.post(ClientResponse.class, newUser);
