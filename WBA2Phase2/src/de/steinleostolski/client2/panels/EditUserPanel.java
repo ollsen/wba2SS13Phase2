@@ -242,7 +242,7 @@ public class EditUserPanel extends JPanel {
 			WebResource webResource = client
 			   .resource("http://"+LoginWindow.adress+":4434/user/"+user.getUser().get(0).getId().toString()+"/edit/");
 			
-			ClientResponse response = webResource.accept("application/xml")
+			ClientResponse response = webResource.type("application/xml")
 					.put(ClientResponse.class, user);
 	 
 			if (response.getStatus() != 200) {

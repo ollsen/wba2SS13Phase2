@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -39,12 +40,19 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.jivesoftware.smackx.pubsub.Item;
+import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
+import org.jivesoftware.smackx.pubsub.LeafNode;
+import org.jivesoftware.smackx.pubsub.PayloadItem;
+import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
 import de.steinleostolski.client2.LoginWindow;
+import de.steinleostolski.payload.Notification;
 import de.steinleostolski.settings.Settings;
 import de.steinleostolski.ticket.CtInfo;
 import de.steinleostolski.ticket.CtInfo.SupporterList;
@@ -206,7 +214,7 @@ public class NewTicketPanel extends JPanel {
 					WebResource webResource = client
 					   .resource("http://"+LoginWindow.adress+":4434/ticket/add/");
 					
-					ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
+					ClientResponse response = webResource.type("application/xml")
 							.post(ClientResponse.class, ticket);
 			 
 					if (response.getStatus() != 201) {
@@ -216,7 +224,41 @@ public class NewTicketPanel extends JPanel {
 				    int x = getSize().width / 2;
 				    int y = getSize().height / 2;
 					JPanel popupPanel = new JPanel(new BorderLayout());
-					JLabel statusLabel = new JLabel(response.getEntity(String.class));
+					String ticketId = response.getEntity(String.class);
+					JLabel statusLabel = new JLabel(
+							"Ticket mit der id: "+ticketId+" hinzugefügt");
+					
+					pubsub.createTicketLeafNode(ticketId);
+					pubsub.subscribeLeafNode(ticketId);
+					
+					LeafNode leaf = pubsub.getLeafNode(ticketId);
+					
+					leaf.addItemEventListener(new ItemEventListener() {
+
+					@Override
+					public void handlePublishedItems(ItemPublishEvent items) {
+									
+						Collection<? extends Item> itemss = items.getItems();
+						for (Item item : itemss) {
+							PayloadItem pi = (PayloadItem) item;
+							JAXBContext jc;
+							try {
+								app.blinkingButton();
+								jc = JAXBContext.newInstance(Notification.class);
+								Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+								StringReader reader = new StringReader(pi.getPayload().toXML());
+								Notification notify = (Notification) unmarshaller.unmarshal(reader);
+								app.createNotifyPanel(notify);
+												
+								} catch (JAXBException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								}
+							}
+						}
+					});
+					
 					popupPanel.add(statusLabel, BorderLayout.CENTER);
 					popupPanel.add(popupButton, BorderLayout.SOUTH);
 					PopupFactory factory = PopupFactory.getSharedInstance();

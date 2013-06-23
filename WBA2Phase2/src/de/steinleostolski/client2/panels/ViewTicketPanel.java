@@ -11,6 +11,7 @@ import java.io.StringReader;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -30,12 +31,22 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smackx.pubsub.Item;
+import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
+import org.jivesoftware.smackx.pubsub.LeafNode;
+import org.jivesoftware.smackx.pubsub.PayloadItem;
+import org.jivesoftware.smackx.pubsub.SimplePayload;
+import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import de.steinleostolski.client2.Application;
 import de.steinleostolski.client2.LoginWindow;
+import de.steinleostolski.payload.Notification;
+import de.steinleostolski.server.RestServerGUI;
 import de.steinleostolski.ticket.CtAntwort;
 import de.steinleostolski.ticket.CtAntwort.Supporter;
 import de.steinleostolski.ticket.Ticket;
@@ -47,6 +58,7 @@ public class ViewTicketPanel extends JPanel {
 	private Application app; 
 	private Userdb user;
 	private Ticket ticket;
+	private PubsubClient pubsub;
 	
 	private JPanel mainPanel;
 	private JPanel AnswerMainPanel;
@@ -74,6 +86,7 @@ public class ViewTicketPanel extends JPanel {
 
 	public ViewTicketPanel(Application app, PubsubClient pubsub, Userdb user) {
 		this.app = app;
+		this.pubsub = pubsub;
 		this.user = user;
 		initUI();
 	}
@@ -132,24 +145,116 @@ public class ViewTicketPanel extends JPanel {
 		takeBtn.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent event) {
 				safeNewSupporter();
+				
+				try {
+					pubsub.subscribeLeafNode(ticket.getId().toString());
+				} catch (XMPPException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				SimplePayload simplePl = new SimplePayload("notification", "pubsub:ticket:notification",
+						"<notification xmlns='pubsub:ticket:notification'>" +
+						"<ticketId>"+ticket.getId()+"</ticketId>"+
+						"<type>supporter take</type>" +
+						"<date>"+getDate()+"</date>" +
+						"<tag>"+ticket.getInfos().getTags().getTag().get(0)+"</tag>"+
+						"</notification>");
+				
+				try {
+					pubsub.sendPayloadItem(ticket.getId().toString(), simplePl);
+				} catch (XMPPException e) {
+					System.out.println("Fehler");
+					e.printStackTrace();
+				}
+				
+
+				LeafNode leaf = null;
+				try {
+					leaf = pubsub.getLeafNode(ticket.getId().toString());
+				} catch (XMPPException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				leaf.addItemEventListener(new ItemEventListener() {
+
+					@Override
+					public void handlePublishedItems(
+							ItemPublishEvent items) {
+						
+						Collection<? extends Item> itemss = items.getItems();
+				        for (Item item : itemss) {
+				                  PayloadItem pi = (PayloadItem) item;
+				                  
+				                  JAXBContext jc;
+								try {
+									app.blinkingButton();
+									jc = JAXBContext.newInstance(Notification.class);
+									Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+									StringReader reader = new StringReader(pi.getPayload().toXML());
+									Notification notify = (Notification) unmarshaller.unmarshal(reader);
+									app.createNotifyPanel(notify);
+									
+								} catch (JAXBException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+				          		  
+								
+				        }
+					}
+				});
 			}
 		});
 		
 		releaseBtn.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent event) {
 				releaseTicket();
+				
+				SimplePayload simplePl = new SimplePayload("notification", "pubsub:ticket:notification",
+						"<notification xmlns='pubsub:ticket:notification'>" +
+						"<ticketId>"+ticket.getId()+"</ticketId>"+
+						"<type>supporter released</type>" +
+						"<date>"+getDate()+"</date>" +
+						"<tag>"+ticket.getInfos().getTags().getTag().get(0)+"</tag>"+
+						"</notification>");
+				
+				try {
+					pubsub.sendPayloadItem(ticket.getId().toString(), simplePl);
+					pubsub.unsubscribeLeafNode(ticket.getId().toString());
+				} catch (XMPPException e) {
+					System.out.println("Fehler");
+					e.printStackTrace();
+				}
 			}
 		});
 		
 		closeBtn.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				closeTicket();
+				
+				SimplePayload simplePl = new SimplePayload("notification", "pubsub:ticket:notification",
+						"<notification xmlns='pubsub:ticket:notification'>" +
+						"<ticketId>"+ticket.getId()+"</ticketId>"+
+						"<type>ticket closed</type>" +
+						"<date>"+getDate()+"</date>" +
+						"<tag>"+ticket.getInfos().getTags().getTag().get(0)+"</tag>"+
+						"</notification>");
+				
+				try {
+					pubsub.sendPayloadItem(ticket.getId().toString(), simplePl);
+					pubsub.unsubscribeLeafNode(ticket.getId().toString());
+				} catch (XMPPException e) {
+					System.out.println("Fehler");
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -332,7 +437,7 @@ public class ViewTicketPanel extends JPanel {
 			WebResource webResource = client
 					   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/editSupporter");
 					
-				ClientResponse response = webResource.accept("application/xml")
+				ClientResponse response = webResource.type("application/xml")
 							.put(ClientResponse.class, ticket);
 			 
 				if (response.getStatus() != 201) {
@@ -360,7 +465,7 @@ public class ViewTicketPanel extends JPanel {
 			WebResource webResource = client
 						.resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/release");
 						
-			ClientResponse response = webResource.accept("application/xml")
+			ClientResponse response = webResource.type("application/xml")
 								.put(ClientResponse.class, ticket);
 				 
 			if (response.getStatus() != 201) {
@@ -386,7 +491,7 @@ public class ViewTicketPanel extends JPanel {
 			WebResource webResource = client
 					.resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/close");
 						
-			ClientResponse response = webResource.accept("application/xml")
+			ClientResponse response = webResource.type("application/xml")
 					.put(ClientResponse.class);
 				 
 			if (response.getStatus() != 201) {
@@ -418,13 +523,24 @@ public class ViewTicketPanel extends JPanel {
 			WebResource webResource = client
 			   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticket.getId().toString()+"/answer/");
 			
-			ClientResponse response = webResource.accept("application/xml")
+			ClientResponse response = webResource.type("application/xml")
 					.put(ClientResponse.class, ticket);
 	 
 			if (response.getStatus() != 201) {
 				throw new RuntimeException("Failed : HTTP error code : "
 				     + response.getStatus());
 			}
+			
+			SimplePayload simplePl = new SimplePayload("notification", "pubsub:ticket:notification",
+					"<notification xmlns='pubsub:ticket:notification'>" +
+					"<ticketId>"+ticket.getId()+"</ticketId>"+
+					"<type>neue antwort</type>" +
+					"<date>"+getDate()+"</date>" +
+					"<tag>"+ticket.getInfos().getTags().getTag().get(0)+"</tag>"+
+					"</notification>");
+			
+			pubsub.sendPayloadItem(ticket.getId().toString(), simplePl);
+			
 		} catch (Exception e) {
 				 
 			e.printStackTrace();

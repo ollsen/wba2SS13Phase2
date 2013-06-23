@@ -121,7 +121,7 @@ public class TicketRessource extends Ressource{
 		schemaLoc = "http://example.org/ticket ../schema/UListeSchema.xsd";
 		marshal(Userdb.class, userdb, "user.xml", schemaLoc);
 		
-		String result = "Ticket mit der id: "+ticket.getId()+" hinzugefügt";
+		String result = ticket.getId().toString();
 		
 		if(RestServerGUI.pubsub == null) {
 			System.out.println("login");
@@ -273,7 +273,7 @@ public class TicketRessource extends Ressource{
 	public Response addAnswer(@PathParam("id") BigInteger id, Ticket newTicket) throws JAXBException, IOException {
 		Ticket ticket = getTicket(id);
 		
-		ticket.getAntworten().getAntwort().add(newTicket.getAntworten().getAntwort().get(0));
+		ticket.getAntworten().getAntwort().add(newTicket.getAntworten().getAntwort().get(newTicket.getAntworten().getAntwort().size()-1));
 		
 		schemaLoc = "http://example.org/ticket ../../schema/TicketSchema.xsd";
 		marshal(Ticket.class, ticket, "tickets/"+id+".xml", schemaLoc);

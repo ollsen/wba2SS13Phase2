@@ -1,5 +1,6 @@
 package de.steinleostolski.xmpp;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,6 +10,7 @@ import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.AccessModel;
+import org.jivesoftware.smackx.pubsub.Affiliation;
 import org.jivesoftware.smackx.pubsub.ConfigureForm;
 import org.jivesoftware.smackx.pubsub.FormType;
 import org.jivesoftware.smackx.pubsub.LeafNode;
@@ -63,6 +65,19 @@ public class PubsubClient {
 	    leaf.sendConfigurationForm(form);
     }
     
+    public void createTicketLeafNode(String nodeName) throws XMPPException {
+    	PubSubManager mgr = new PubSubManager(connection);
+    	ConfigureForm form = new ConfigureForm(FormType.submit);
+	    form.setAccessModel(AccessModel.open);
+	    form.setDeliverPayloads(true);
+	    form.setNotifyRetract(true);
+	    form.setPersistentItems(false);
+	    form.setPublishModel(PublishModel.open);
+	    
+	    LeafNode leaf = mgr.createNode(nodeName);
+	    leaf.sendConfigurationForm(form);
+    }
+    
     public void removeLeafNode(String nodeName) throws XMPPException {
     	PubSubManager mgr = new PubSubManager(connection);
     	mgr.deleteNode(nodeName);
@@ -88,6 +103,12 @@ public class PubsubClient {
     }
     
     public void getSubscriptionId(String nodeName) {
+    	
+    }
+    
+    public List<Affiliation> getAffiliations() throws XMPPException {
+    	PubSubManager mgr = new PubSubManager(connection);
+    	return mgr.getAffiliations();
     	
     }
     

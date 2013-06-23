@@ -248,7 +248,7 @@ public class ViewTicketlistPanel extends JPanel {
 			WebResource webResource = client
 					   .resource("http://"+LoginWindow.adress+":4434/ticket/"+ticketId+"/delete");
 			
-			ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
+			ClientResponse response = webResource.type("application/xml")
 					.delete(ClientResponse.class);
 			
 			if (response.getStatus() != 200) {

@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -32,6 +33,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smackx.pubsub.Affiliation;
 import org.jivesoftware.smackx.pubsub.Item;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.LeafNode;
@@ -50,6 +52,8 @@ import de.steinleostolski.client2.panels.ViewTicketPanel;
 import de.steinleostolski.client2.panels.ViewTicketlistPanel;
 import de.steinleostolski.client2.panels.ViewUserPanel;
 import de.steinleostolski.payload.Notification;
+import de.steinleostolski.tickets.Ticketlist;
+import de.steinleostolski.tickets.Ticketlist.Teintrag;
 import de.steinleostolski.user.Userdb;
 import de.steinleostolski.xmpp.ItemEventCoordinator;
 import de.steinleostolski.xmpp.PubsubClient;
@@ -62,6 +66,7 @@ public class Application extends JFrame {
 	private static final long serialVersionUID = -915354554495610098L;
 	
 	private PubsubClient pubsub;
+	public static String adress;
 	private Userdb user;
 	private MainMenuPanel mmPanel;
 	private NewTicketPanel ntPanel;
@@ -79,8 +84,9 @@ public class Application extends JFrame {
 	
 	private List<JPanel> panelList;
 	
-	public Application(PubsubClient pubsub) {
+	public Application(PubsubClient pubsub, String adress) {
 		this.pubsub = pubsub;
+		this.adress = adress;
 		user = new Userdb();
 		try {
 			loadProfile();
@@ -132,10 +138,13 @@ public class Application extends JFrame {
 	
 	@SuppressWarnings("deprecation")
 	protected void openNotifyFrame() {
-		if(thread.isAlive()) {
-			thread.stop();
-			notificationBtn.setForeground(Color.BLACK);
+		if(thread != null) {
+			if(thread.isAlive()) {
+				thread.stop();
+				notificationBtn.setForeground(Color.BLACK);
+			}
 		}
+		
 			
 	    notifyFrame.setSize(200, 600);
 	    notifyFrame.show();
@@ -189,7 +198,7 @@ public class Application extends JFrame {
 		}
 		Client client = Client.create();
 		WebResource webResource = client
-				   .resource("http://localhost:4434/user/");
+				   .resource("http://"+adress+":4434/user/");
 	    // lets get the XML as a String
 	    String text = webResource.accept("application/xml").get(String.class);
 	    JAXBContext jc = JAXBContext.newInstance(Userdb.class);
@@ -209,71 +218,79 @@ public class Application extends JFrame {
 	private void getNodes() {
 		notifyFrame = new JFrame();
 		notifyFrame.setLayout(new GridLayout(10, 1, 0, 4));
-		
-		if(user.getUser().get(0).getKnowHows().getKnowHow().size() != 0) {
-			for(int i = 0; i < user.getUser().get(0).getKnowHows().getKnowHow().size(); i++) {
-				try {
-					LeafNode leaf = pubsub.getLeafNode(user.getUser().get(0).getKnowHows().getKnowHow()
-							.get(i));
+						
+		try {
+			List<Affiliation> list = pubsub.getAffiliations();
 					
-					leaf.addItemEventListener(new ItemEventListener() {
+			for(Affiliation affiliation : list) {
+				LeafNode leaf = pubsub.getLeafNode(affiliation.getNodeId());
+						
+				leaf.addItemEventListener(new ItemEventListener() {
 
-						@Override
-						public void handlePublishedItems(
-								ItemPublishEvent items) {
-							
-//							try {
-//								Clip clip = AudioSystem.getClip();
-//								AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(
-//										"src/de/steinleostolski/client2/sound/alarma.wav"));
-//								clip.open(inputStream);
-//						        clip.start(); 
-//							} catch (Exception e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							} 
-							Collection<? extends Item> itemss = items.getItems();
-					        for (Item item : itemss) {
-					                  PayloadItem pi = (PayloadItem) item;
-					                  
-					                  JAXBContext jc;
-									try {
-										blinkingButton();
-										jc = JAXBContext.newInstance(Notification.class);
-										Unmarshaller unmarshaller = jc.createUnmarshaller();
+				@Override
+				public void handlePublishedItems(ItemPublishEvent items) {
+								
+					Collection<? extends Item> itemss = items.getItems();
+					for (Item item : itemss) {
+						PayloadItem pi = (PayloadItem) item;
+						JAXBContext jc;
+						try {
+							blinkingButton();
+							jc = JAXBContext.newInstance(Notification.class);
+							Unmarshaller unmarshaller = jc.createUnmarshaller();
 
-										StringReader reader = new StringReader(pi.getPayload().toXML());
-										Notification notify = (Notification) unmarshaller.unmarshal(reader);
-										createNotifyPanel(notify);
-										
-									} catch (JAXBException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-					          		  
-									
-					        }
+							StringReader reader = new StringReader(pi.getPayload().toXML());
+							Notification notify = (Notification) unmarshaller.unmarshal(reader);
+							createNotifyPanel(notify);
+											
+							} catch (JAXBException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							}
 						}
-					});
-				} catch (XMPPException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					}
+				});
 			}
-			
-		}
+					
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+				
 	}
 	
-	protected void createNotifyPanel(final Notification notify) {
+	public void createNotifyPanel(final Notification notify) {
 		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(200, 150));
+		panel.setPreferredSize(new Dimension(275, 150));
 		panel.setLayout(new GridLayout(4, 1));
-		JLabel label = new JLabel("neues Ticket erstellt");
-		JLabel label2 = new JLabel("ID: "+notify.getTicketId());
-		JLabel label3 = new JLabel("Fachgebiet: "+notify.getTag());
-		JLabel label4 = new JLabel("Datum: "+notify.getDate());
-		panel.add(label); panel.add(label2); panel.add(label3);
-		panel.add(label4);
+		if(notify.getType().equals("new ticket")) {
+			JLabel label = new JLabel("neues Ticket erstellt");
+			JLabel label2 = new JLabel("ID: "+notify.getTicketId());
+			JLabel label3 = new JLabel("Fachgebiet: "+notify.getTag());
+			JLabel label4 = new JLabel("Datum: "+notify.getDate());
+			panel.add(label); panel.add(label2); panel.add(label3);
+			panel.add(label4);
+		} else if(notify.getType().equals("supporter take")) {
+			JLabel label = new JLabel("Ein Supporter wird Ihre Anfrage bearbeiten");
+			JLabel label2 = new JLabel("ID: "+notify.getTicketId());
+			JLabel label3 = new JLabel("Datum: "+notify.getDate());
+			panel.add(label); panel.add(label2); panel.add(label3);
+		} else if(notify.getType().equals("supporter release")) {
+			JLabel label = new JLabel("Der Supporter hat Ihre Anfrage weitergeleitet");
+			JLabel label2 = new JLabel("ID: "+notify.getTicketId());
+			JLabel label3 = new JLabel("Datum: "+notify.getDate());
+			panel.add(label); panel.add(label2); panel.add(label3);
+		} else if(notify.getType().equals("ticket closed")) {
+			JLabel label = new JLabel("Ticket wurde geschlossen");
+			JLabel label2 = new JLabel("ID: "+notify.getTicketId());
+			JLabel label3 = new JLabel("Datum: "+notify.getDate());
+			panel.add(label); panel.add(label2); panel.add(label3);
+		} else if(notify.getType().equals("neue antwort")) {
+			JLabel label = new JLabel("Neue Antwort");
+			JLabel label2 = new JLabel("ID: "+notify.getTicketId());
+			JLabel label3 = new JLabel("Datum: "+notify.getDate());
+			panel.add(label); panel.add(label2); panel.add(label3);
+		}
 		notifyFrame.getContentPane().add(panel);
 		notifyFrame.validate();
 		notifyFrame.repaint();
@@ -323,7 +340,7 @@ public class Application extends JFrame {
 		});
 	}
 	
-	private void blinkingButton() {
+	public void blinkingButton() {
 		thread = new Thread() {
 
 			@Override

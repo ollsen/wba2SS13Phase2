@@ -141,7 +141,6 @@ public class NewUserPanel extends JPanel {
 		
 		sendBtn.addActionListener(new ActionListener() {
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Userdb newUser = new Userdb();
@@ -165,15 +164,12 @@ public class NewUserPanel extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 				Client client = Client.create();
 				try { 
 					WebResource webResource = client
-					   .resource("http://"+LoginWindow.adress+":4434/user/add/");
-					
-					ClientResponse response = webResource.accept("MediaType.APPLICATION_XML")
+					   .resource("http://"+Application.adress+":4434/user/add/");
+					ClientResponse response = webResource.type("application/xml")
 							.post(ClientResponse.class, newUser);
-			 
 					if (response.getStatus() != 201) {
 						throw new RuntimeException("Failed : HTTP error code : "
 						     + response.getStatus());

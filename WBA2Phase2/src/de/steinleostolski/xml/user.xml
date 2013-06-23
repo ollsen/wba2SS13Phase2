@@ -9,6 +9,7 @@
         <status>admin</status>
         <KnowHows>
             <KnowHow>Hardware</KnowHow>
+            <KnowHow>Software</KnowHow>
         </KnowHows>
         <Tickets>
             <ticketId>1</ticketId>
@@ -18,6 +19,7 @@
             <ticketId>7</ticketId>
             <ticketId>8</ticketId>
             <ticketId>9</ticketId>
+            <ticketId>20</ticketId>
         </Tickets>
     </user>
     <user>
@@ -31,6 +33,27 @@
         <Tickets>
             <ticketId>4</ticketId>
             <ticketId>5</ticketId>
+            <ticketId>12</ticketId>
+            <ticketId>13</ticketId>
+            <ticketId>14</ticketId>
+            <ticketId>15</ticketId>
+            <ticketId>16</ticketId>
+            <ticketId>17</ticketId>
+            <ticketId>18</ticketId>
+            <ticketId>19</ticketId>
+        </Tickets>
+    </user>
+    <user>
+        <id>3</id>
+        <jabber>dostolski</jabber>
+        <Vorname>David</Vorname>
+        <Nachname>Ostolski</Nachname>
+        <Standort>Kölle</Standort>
+        <status>User</status>
+        <KnowHows/>
+        <Tickets>
+            <ticketId>10</ticketId>
+            <ticketId>11</ticketId>
         </Tickets>
     </user>
 </userdb>

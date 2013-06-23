@@ -167,7 +167,7 @@ public class SettingsPanel extends JPanel {
 			WebResource webResource = client
 			   .resource("http://"+LoginWindow.adress+":4434/settings/addfield/");
 			
-			ClientResponse response = webResource.accept("text/plain")
+			ClientResponse response = webResource.type("text/plain")
 					.post(ClientResponse.class, addField.getText());
 	 
 			if (response.getStatus() != 201) {

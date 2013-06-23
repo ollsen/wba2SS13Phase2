@@ -122,7 +122,7 @@ public class LoginWindow extends JFrame {
 			status.setForeground(Color.GREEN);
 			status.setText("erfolgreich");
 			dispose();
-			Application app = new Application(pubsub);
+			Application app = new Application(pubsub, adress);
 			app.setVisible(true);
 		}
     }
